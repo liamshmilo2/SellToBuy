@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView textHome;
     //Dialog dialoglogin;
     Check check;
+    FirebaseController firebaseController;
 
 
     @Override
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //dialoglogin.setContentView(R.layout.logindialog);
 
         check = new Check();
+        firebaseController=new FirebaseController();
 
 
     }
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     else
                     {
-                        //todo  save login
+
                         Intent intent = new Intent(MainActivity.this , Buyproduct.class);
                         startActivity(intent);
                     }
@@ -116,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     else
                     {
-                        //todo  save login
-                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
-                        startActivity(intent);
+                        firebaseController.createUser(email.getText().toString(),password.getText().toString());
+//                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
+//                        startActivity(intent);
                     }
 
 
