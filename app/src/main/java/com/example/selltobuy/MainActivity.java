@@ -37,9 +37,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //dialoglogin.setContentView(R.layout.logindialog);
 
         check = new Check();
-        firebaseController=new FirebaseController();
+        firebaseController=new FirebaseController(this);
 
-
+        if(firebaseController.currentUser())
+        {
+            Intent intent = new Intent(MainActivity.this,Buyproduct.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -49,14 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.logindialog);
             Button btnok = dialog.findViewById(R.id.btnok);
-            EditText username = dialog.findViewById(R.id.username);
+            EditText email2 = dialog.findViewById(R.id.email2);
             EditText pass = dialog.findViewById(R.id.pass);
             btnok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(check.checkName(username.getText().toString())==false)
+                    if(check.checkName(email2.getText().toString())==false)
                     {
-                        Toast.makeText(MainActivity.this, "please write a real user name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "please write a real email", Toast.LENGTH_SHORT).show();
                     }
                     else if(check.checkPass(pass.getText().toString())==false)
                     {
@@ -64,9 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     else
                     {
+                        firebaseController.lonIn(email2.getText().toString(),pass.getText().toString());
 
-                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
+//                        startActivity(intent);
                     }
 //                    if(check.checkName(username.getText().toString()) && check.checkPass(pass.getText().toString()))
 //                    {

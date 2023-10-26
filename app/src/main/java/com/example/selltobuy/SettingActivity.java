@@ -13,12 +13,13 @@ import android.widget.Button;
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button update,logout,change;
+    FirebaseController firebaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        getIntent();
+        //getIntent();
 
         update=findViewById(R.id.update);
         update.setOnClickListener(this);
@@ -28,6 +29,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         change=findViewById(R.id.change);
         change.setOnClickListener(this);
+        firebaseController= new FirebaseController(this);
     }
 
     @Override
@@ -74,8 +76,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         if(view==logout)
         {
-            Intent intentOut = new Intent(SettingActivity.this , MainActivity.class);
-            startActivity(intentOut);
+            firebaseController.logOut();
         }
 
     }

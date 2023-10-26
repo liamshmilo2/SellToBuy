@@ -10,16 +10,20 @@ import android.widget.TextView;
 
 public class Userdetails extends AppCompatActivity {
 
-    TextView nameDetails,idDetails,birthDetails,coinsDetails;
+    TextView nameDetails,usernamedetails,emaildetails,coinsDetails;
+    FirebaseController firebaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdetails);
         nameDetails=findViewById(R.id.nameDetails);
-        idDetails=findViewById(R.id.idDetails);
-        birthDetails=findViewById(R.id.birthDetails);
+        usernamedetails=findViewById(R.id.usernamedetails);
+        emaildetails=findViewById(R.id.emaildetails);
         coinsDetails=findViewById(R.id.coinsDetails);
+        firebaseController=new FirebaseController(this);
+
+
     }
 
     @Override
