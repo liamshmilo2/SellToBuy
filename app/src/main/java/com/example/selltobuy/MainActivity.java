@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     else
                     {
-                        firebaseController.createUser(email.getText().toString(),password.getText().toString());
+                        User user = new User(name.getText().toString(),newuser.getText().toString(),100,email.getText().toString(),phone.getText().toString());
+                        firebaseController.createUser(user,password.getText().toString());
 //                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
 //                        startActivity(intent);
                     }

@@ -10,10 +10,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseController {
 
     private static FirebaseAuth mAuth;
+    private static FirebaseDatabase DATABASE;
+    private static DatabaseReference MYREF;
     private Context context;
 
     public FirebaseController(Context context) {
@@ -27,6 +31,21 @@ public class FirebaseController {
         return mAuth;
     }
 
+     public static FirebaseDatabase getDATABASE()
+     {
+        if(DATABASE==null)
+        {
+            DATABASE = FirebaseDatabase.getInstance();
+        }
+        return DATABASE;
+     }
+
+     public static DatabaseReference getMYREF(String key)
+     {
+         MYREF = getDATABASE().getReference(key);
+         return MYREF;
+     }
+
     public boolean currentUser()
     {
         if(getAuth().getCurrentUser()==null)
@@ -36,12 +55,14 @@ public class FirebaseController {
 
 
 
-    public void createUser(String email, String password) {
-        getAuth().createUserWithEmailAndPassword(email, password)
+    public void createUser(User user, String password) {
+        getAuth().createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            user.setId(task.getResult().getUser().getUid());
+                            getMYREF("users").child(task.getResult().getUser().getUid()).setValue(user);
                             // Sign in success, update UI with the signed-in user's information
 //                            Log.d(TAG, "createUserWithEmail:success");
 //                            FirebaseUser user = mAuth.getCurrentUser();
