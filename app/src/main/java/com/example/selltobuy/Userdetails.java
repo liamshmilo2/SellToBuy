@@ -24,6 +24,8 @@ public class Userdetails extends AppCompatActivity {
         firebaseController=new FirebaseController(this);
 
 
+
+
     }
 
     @Override

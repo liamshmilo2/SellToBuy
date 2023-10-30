@@ -9,16 +9,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
-public class Sell extends AppCompatActivity {
+public class Sell extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imageView;
     FloatingActionButton button;
+    Button btnSell;
+    EditText editTextName,editTextPrice,editTextInfo;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -29,6 +36,11 @@ public class Sell extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         button=findViewById(R.id.floatingActionButton);
+        btnSell=findViewById(R.id.buttonsell);
+        btnSell.setOnClickListener(this);
+        editTextName=findViewById(R.id.editTextName);
+        editTextInfo=findViewById(R.id.editTextInfo);
+        editTextPrice=findViewById(R.id.editTextPrice);
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -68,5 +80,24 @@ public class Sell extends AppCompatActivity {
 //            startActivity(intent4);
 //        }
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view==btnSell)
+        {
+            String name = editTextName.getText().toString();
+            String info = editTextInfo.getText().toString();
+            int price =Integer.parseInt(editTextPrice.getText().toString());
+            Calendar calendar = Calendar.getInstance();
+            int day  = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+            Date date1 = new Date(year,month,day);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.set(date1.getYear(),date1.getMonth(),date1.getDay()+7);
+            Date date2 = new Date(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH),calendar1.get(Calendar.DAY_OF_MONTH));
+            Toast.makeText(this, date2.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

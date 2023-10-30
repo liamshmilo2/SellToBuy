@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseController {
 
-    private static FirebaseAuth mAuth;
+    private static FirebaseAuth MAUTH;
     private static FirebaseDatabase DATABASE;
     private static DatabaseReference MYREF;
     private Context context;
@@ -26,9 +26,9 @@ public class FirebaseController {
 
     public static FirebaseAuth getAuth()
     {
-        if(mAuth == null)
-            mAuth=FirebaseAuth.getInstance();
-        return mAuth;
+        if(MAUTH == null)
+            MAUTH =FirebaseAuth.getInstance();
+        return MAUTH;
     }
 
      public static FirebaseDatabase getDATABASE()
