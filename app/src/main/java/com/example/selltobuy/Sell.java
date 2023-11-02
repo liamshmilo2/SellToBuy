@@ -26,6 +26,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
     FloatingActionButton button;
     Button btnSell;
     EditText editTextName,editTextPrice,editTextInfo;
+    Check check;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -41,6 +42,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         editTextName=findViewById(R.id.editTextName);
         editTextInfo=findViewById(R.id.editTextInfo);
         editTextPrice=findViewById(R.id.editTextPrice);
+        check=new Check();
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -88,16 +90,33 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         {
             String name = editTextName.getText().toString();
             String info = editTextInfo.getText().toString();
-            int price =Integer.parseInt(editTextPrice.getText().toString());
-            Calendar calendar = Calendar.getInstance();
-            int day  = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH);
-            int year = calendar.get(Calendar.YEAR);
-            Date date1 = new Date(year,month,day);
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.set(date1.getYear(),date1.getMonth(),date1.getDay()+7);
-            Date date2 = new Date(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH),calendar1.get(Calendar.DAY_OF_MONTH));
-            Toast.makeText(this, date2.toString(), Toast.LENGTH_SHORT).show();
+            String price =editTextPrice.getText().toString();
+            int price2;
+            if(check.checkName(name)==false)
+            {
+                Toast.makeText(this, "please write a real name", Toast.LENGTH_SHORT).show();
+            }
+            else if(check.chekInpo(info)==false)
+            {
+                Toast.makeText(this, "please write any info about the product", Toast.LENGTH_SHORT).show();
+            } else if (check.chekPrice(price)==false)
+            {
+                Toast.makeText(this, "please write price", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                price2 = Integer.parseInt(price);
+                Calendar calendar = Calendar.getInstance();
+                int day  = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                Date date1 = new Date(year,month,day);
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.add(Calendar.DAY_OF_YEAR,7);
+                Date date2 = new Date(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH),calendar1.get(Calendar.DAY_OF_MONTH));
+                Toast.makeText(this, date2.toString(), Toast.LENGTH_SHORT).show();
+                //Product product = new Product(price2,name,info,date1,date2,"phone");
+            }
+
         }
     }
 }

@@ -36,5 +36,20 @@ public class Check {
         return false;
     }
 
+    public boolean chekInpo(String inpo)
+    {
+        if(!inpo.isEmpty())
+            return true;
+        return false;
+    }
+
+    public boolean chekPrice(String price)
+    {
+        if(!price.isEmpty())
+            return true;
+        return false;
+    }
+
+
 
 }

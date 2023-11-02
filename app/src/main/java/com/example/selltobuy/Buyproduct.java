@@ -16,11 +16,15 @@ import java.util.ArrayList;
 public class Buyproduct extends AppCompatActivity {
     private ArrayList<Product> products;
     private View.OnClickListener onItemClickListener;
+    private FirebaseController firebaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyproduct);
+        firebaseController = new FirebaseController(this);
+        firebaseController.read();
+
 
         products = new ArrayList<>();
         Date d1 = new Date(2023,9,21);
