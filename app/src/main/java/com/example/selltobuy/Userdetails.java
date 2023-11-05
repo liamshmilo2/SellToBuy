@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class Userdetails extends AppCompatActivity {
+public class Userdetails extends AppCompatActivity implements IFirebaseCallback {
 
     TextView nameDetails,usernamedetails,emaildetails,coinsDetails;
     FirebaseController firebaseController;
@@ -22,6 +22,8 @@ public class Userdetails extends AppCompatActivity {
         emaildetails=findViewById(R.id.emaildetails);
         coinsDetails=findViewById(R.id.coinsDetails);
         firebaseController=new FirebaseController(this);
+        firebaseController.read(this);
+
 
 
     }
@@ -52,4 +54,13 @@ public class Userdetails extends AppCompatActivity {
         }
         return true;
     }
+
+    @Override
+    public void onCallbackUser(User user) {
+        nameDetails.setText("Name: " + user.getName());
+        usernamedetails.setText("User name: " + user.getUserName());
+        emaildetails.setText("Email: " + user.getEmail());
+        coinsDetails.setText("Coin number: " + user.getCoin());
+    }
+
 }

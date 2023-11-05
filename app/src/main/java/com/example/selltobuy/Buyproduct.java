@@ -23,7 +23,7 @@ public class Buyproduct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyproduct);
         firebaseController = new FirebaseController(this);
-        firebaseController.read();
+
 
 
         products = new ArrayList<>();

@@ -117,13 +117,14 @@ public class FirebaseController {
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
-    public void read()
+    public void read(IFirebaseCallback firebaseCallback)
     {
         FirebaseUser user = getAuth().getCurrentUser();
         getMYREF("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User value = dataSnapshot.getValue(User.class);
+                firebaseCallback.onCallbackUser(value);
                 Log.d("TAG", "Value is: " + value);
             }
 
