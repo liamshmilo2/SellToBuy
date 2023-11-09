@@ -1,11 +1,11 @@
 package com.example.selltobuy;
 
-public class Date {
+public class MyDate {
     private  int yaer;
     private  int month;
     private  int day;
 
-    public Date(int yaer, int month, int day) {
+    public MyDate(int yaer, int month, int day) {
         this.yaer = yaer;
         this.month = month;
         this.day = day;

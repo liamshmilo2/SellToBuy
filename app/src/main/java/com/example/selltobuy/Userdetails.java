@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class Userdetails extends AppCompatActivity implements IFirebaseCallback {
 
     TextView nameDetails,usernamedetails,emaildetails,coinsDetails;
@@ -61,6 +63,12 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback 
         usernamedetails.setText("User name: " + user.getUserName());
         emaildetails.setText("Email: " + user.getEmail());
         coinsDetails.setText("Coin number: " + user.getCoin());
+    }
+
+    @Override
+    public void onCallbackList(ArrayList<Product> products) {
+
+
     }
 
 }

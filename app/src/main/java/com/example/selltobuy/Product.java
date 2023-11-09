@@ -1,18 +1,15 @@
 package com.example.selltobuy;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
-
 public class Product {
     private  int price; //מחיר התחלתי של המוצר
     private  String name; //שם המוצר
     private  String info; // הסבר על המוצר
-    private  Date stratDate; // תאריך התחלת העלאת המוצר
-    private  Date finalDate; // תאריך בו המוצר ימכר
+    private MyDate stratDate; // תאריך התחלת העלאת המוצר
+    private MyDate finalDate; // תאריך בו המוצר ימכר
 
     private String image;
 
-    public Product(int price, String name, String info, Date stratDate, Date finalDate , String image) {
+    public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , String image) {
         this.price = price;
         this.name = name;
         this.info = info;
@@ -33,11 +30,11 @@ public class Product {
         return info;
     }
 
-    public Date getStratDate() {
+    public MyDate getStratDate() {
         return stratDate;
     }
 
-    public Date getFinalDate() {
+    public MyDate getFinalDate() {
         return finalDate;
     }
 

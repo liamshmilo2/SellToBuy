@@ -28,6 +28,8 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
     EditText editTextName,editTextPrice,editTextInfo;
     Check check;
 
+    FirebaseController firebaseController;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         editTextInfo=findViewById(R.id.editTextInfo);
         editTextPrice=findViewById(R.id.editTextPrice);
         check=new Check();
+        firebaseController=new FirebaseController(this);
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -109,12 +112,13 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
                 int day  = calendar.get(Calendar.DAY_OF_MONTH);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
-                Date date1 = new Date(year,month,day);
+                MyDate date1 = new MyDate(year,month,day);
                 Calendar calendar1 = Calendar.getInstance();
                 calendar1.add(Calendar.DAY_OF_YEAR,7);
-                Date date2 = new Date(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH),calendar1.get(Calendar.DAY_OF_MONTH));
-                Toast.makeText(this, date2.toString(), Toast.LENGTH_SHORT).show();
-                //Product product = new Product(price2,name,info,date1,date2,"phone");
+                MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH),calendar1.get(Calendar.DAY_OF_MONTH));
+//                Toast.makeText(this, date2.toString(), Toast.LENGTH_SHORT).show();
+                Product product = new Product(price2,name,info,date1,date2,"phone");
+                firebaseController.saveProduct(product);
             }
 
         }

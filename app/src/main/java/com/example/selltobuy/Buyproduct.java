@@ -11,29 +11,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+
 import java.util.ArrayList;
 
-public class Buyproduct extends AppCompatActivity {
+public class Buyproduct extends AppCompatActivity implements IFirebaseCallback {
     private ArrayList<Product> products;
     private View.OnClickListener onItemClickListener;
     private FirebaseController firebaseController;
+    RecyclerView recyclerView;
+    ProductAdapter productAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyproduct);
         firebaseController = new FirebaseController(this);
+        firebaseController.retrieveData(this);
 
 
 
         products = new ArrayList<>();
-        Date d1 = new Date(2023,9,21);
-        Date d2 = new Date(2023,9,28);
+        MyDate d1 = new MyDate(2023,9,21);
+        MyDate d2 = new MyDate(2023,9,28);
 
         for (int i=0; i<10; i++)
         {
             products.add(new Product(100, "phone2" , "samsung s10+",d1,d2,"phone"));
         }
+
+
+
 
         onItemClickListener = new View.OnClickListener() {
             @Override
@@ -45,10 +53,10 @@ public class Buyproduct extends AppCompatActivity {
             }
         };
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview_product);
+        recyclerView = findViewById(R.id.recyclerview_product);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        ProductAdapter productAdapter = new ProductAdapter(products);
+        productAdapter = new ProductAdapter(products);
         recyclerView.setAdapter(productAdapter);
         productAdapter.setmOnItemClickListener(onItemClickListener);
     }
@@ -78,5 +86,18 @@ public class Buyproduct extends AppCompatActivity {
             startActivity(intent4);
         }
         return true;
+    }
+
+    @Override
+    public void onCallbackUser(User user) {
+
+    }
+
+    @Override
+    public void onCallbackList(ArrayList<Product> products1) {
+        products=products1;
+        productAdapter=new ProductAdapter(products);
+        recyclerView.setAdapter(productAdapter);
+        productAdapter.setmOnItemClickListener(onItemClickListener);
     }
 }

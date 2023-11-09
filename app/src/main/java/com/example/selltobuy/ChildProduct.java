@@ -4,7 +4,7 @@ public class ChildProduct extends Product{
 
     private int age;
 
-    public ChildProduct(int price, String name, String info, Date stratDate, Date finalDate, String image, int age) {
+    public ChildProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, String image, int age) {
         super(price, name, info, stratDate, finalDate, image);
         this.age = age;
     }

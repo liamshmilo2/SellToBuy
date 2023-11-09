@@ -2,7 +2,9 @@ package com.example.selltobuy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class FirebaseController {
 
@@ -58,6 +62,31 @@ public class FirebaseController {
         return true;
     }
 
+
+    public void saveProduct(Product product) {
+              getMYREF("products").push().setValue(product);
+    }
+
+
+    public void retrieveData( IFirebaseCallback firebaseCallback)
+    {
+        getMYREF("products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList productList = new ArrayList<Product>();
+                for(DataSnapshot data : dataSnapshot.getChildren())
+                {
+                    Product p = data.getValue(Product.class);
+                    productList.add(p);
+                }
+                firebaseCallback.onCallbackList(productList);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
     public void createUser(User user, String password) {
