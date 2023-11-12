@@ -88,6 +88,11 @@ public class FirebaseController {
         });
     }
 
+//    public String getId(Product product , IFirebaseCallback firebaseCallback)
+//    {
+//
+//    }
+
 
     public void createUser(User user, String password) {
         getAuth().createUserWithEmailAndPassword(user.getEmail(), password)

@@ -1,6 +1,8 @@
 package com.example.selltobuy;
 
-public class MyDate {
+import java.io.Serializable;
+
+public class MyDate implements Serializable {
     private  int yaer;
     private  int month;
     private  int day;
@@ -9,6 +11,9 @@ public class MyDate {
         this.yaer = yaer;
         this.month = month;
         this.day = day;
+    }
+
+    public MyDate() {
     }
 
     public int getYaer() {

@@ -25,9 +25,6 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback 
         coinsDetails=findViewById(R.id.coinsDetails);
         firebaseController=new FirebaseController(this);
         firebaseController.read(this);
-
-
-
     }
 
     @Override

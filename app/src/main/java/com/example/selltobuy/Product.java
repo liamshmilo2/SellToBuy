@@ -1,6 +1,8 @@
 package com.example.selltobuy;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private  int price; //מחיר התחלתי של המוצר
     private  String name; //שם המוצר
     private  String info; // הסבר על המוצר
@@ -16,6 +18,18 @@ public class Product {
         this.stratDate = stratDate;
         this.finalDate = finalDate;
         this.image = image;
+    }
+
+    public Product() {
+
+    }
+
+    public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate) {
+        this.price = price;
+        this.name = name;
+        this.info = info;
+        this.stratDate = stratDate;
+        this.finalDate = finalDate;
     }
 
     public int getPrice() {

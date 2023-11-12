@@ -39,7 +39,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.priceTextView.setText(currentProduct.getPrice()+"");
         holder.startTextView.setText(currentProduct.getStratDate().toString());
         holder.finalTextView.setText(currentProduct.getFinalDate().toString());
-        holder.imageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentProduct.getImage(),"drawable",holder.nameTextView.getContext().getPackageName()));
+        //holder.imageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentProduct.getImage(),"drawable",holder.nameTextView.getContext().getPackageName()));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         public  TextView priceTextView;
         public  TextView startTextView;
         public  TextView finalTextView;
-        public ImageView imageView;
+        //public ImageView imageView;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,7 +61,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             priceTextView = itemView.findViewById(R.id.textview_price);
             startTextView = itemView.findViewById(R.id.textview_strat);
             finalTextView = itemView.findViewById(R.id.textview_final);
-            imageView = itemView.findViewById(R.id.imageView);
+            //imageView = itemView.findViewById(R.id.imageView);
 
             itemView.setTag(this);
             itemView.setOnClickListener(mOnItemClickListener);

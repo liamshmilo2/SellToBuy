@@ -35,30 +35,30 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback {
         MyDate d1 = new MyDate(2023,9,21);
         MyDate d2 = new MyDate(2023,9,28);
 
-        for (int i=0; i<10; i++)
-        {
-            products.add(new Product(100, "phone2" , "samsung s10+",d1,d2,"phone"));
-        }
-
-
-
-
-        onItemClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
-                int position = viewHolder.getAdapterPosition();
-                Product productItem = products.get(position);
-                Toast.makeText(Buyproduct.this , "you clicked " + productItem.getInfo() , Toast.LENGTH_SHORT).show();
-            }
-        };
+//        for (int i=0; i<10; i++)
+//        {
+//          products.add(new Product(100, "phone2" , "samsung s10+",d1,d2));
+//        }
+//
+//
+//
+//
+//        onItemClickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+//                int position = viewHolder.getAdapterPosition();
+//                Product productItem = products.get(position);
+//                Toast.makeText(Buyproduct.this , "you clicked " + productItem.getInfo() , Toast.LENGTH_SHORT).show();
+//            }
+//        };
 
         recyclerView = findViewById(R.id.recyclerview_product);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        productAdapter = new ProductAdapter(products);
-        recyclerView.setAdapter(productAdapter);
-        productAdapter.setmOnItemClickListener(onItemClickListener);
+//        productAdapter = new ProductAdapter(products);
+//        recyclerView.setAdapter(productAdapter);
+//        productAdapter.setmOnItemClickListener(onItemClickListener);
     }
 
     @Override
@@ -98,6 +98,25 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback {
         products=products1;
         productAdapter=new ProductAdapter(products);
         recyclerView.setAdapter(productAdapter);
+
+        onItemClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+                int position = viewHolder.getAdapterPosition();
+                Product productItem = products.get(position);
+                Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
+                intent.putExtra("product" , productItem);
+//                intent.putExtra("name",productItem.getName());
+//                intent.putExtra("price" , productItem.getPrice());
+//                intent.putExtra("info",productItem.getInfo());
+//                intent.putExtra("day" , productItem.getStratDate().getDay());
+//                intent.putExtra("month" , productItem.getStratDate().getMonth());
+//                intent.putExtra("year" , productItem.getStratDate().getYaer());
+                startActivity(intent);
+                //Toast.makeText(Buyproduct.this , "you clicked " + productItem.getInfo() , Toast.LENGTH_SHORT).show();
+            }
+        };
         productAdapter.setmOnItemClickListener(onItemClickListener);
     }
 }
