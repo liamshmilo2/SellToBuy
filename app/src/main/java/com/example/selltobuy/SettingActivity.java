@@ -21,8 +21,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_setting);
         //getIntent();
 
-        update=findViewById(R.id.update);
-        update.setOnClickListener(this);
+//        update=findViewById(R.id.update);
+//        update.setOnClickListener(this);
 
         logout=findViewById(R.id.logout);
         logout.setOnClickListener(this);
@@ -61,18 +61,18 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        if (view==update){
-            Dialog dialog = new Dialog(SettingActivity.this);
-            dialog.setContentView(R.layout.updatedialog);
-            Button btnclose = dialog.findViewById(R.id.btnclose);
-            btnclose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        }
+//        if (view==update){
+//            Dialog dialog = new Dialog(SettingActivity.this);
+//            dialog.setContentView(R.layout.updatedialog);
+//            Button btnclose = dialog.findViewById(R.id.btnclose);
+//            btnclose.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    dialog.dismiss();
+//                }
+//            });
+//            dialog.show();
+//        }
 
         if(view==logout)
         {

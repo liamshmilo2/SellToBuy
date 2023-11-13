@@ -4,14 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,13 +27,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public class Sell extends AppCompatActivity implements View.OnClickListener {
+public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener {
 
     ImageView imageView;
     FloatingActionButton button;
     Button btnSell;
     EditText editTextName,editTextPrice,editTextInfo;
     Check check;
+
 
     FirebaseController firebaseController;
 
@@ -46,6 +54,13 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
         editTextPrice=findViewById(R.id.editTextPrice);
         check=new Check();
         firebaseController=new FirebaseController(this);
+        Spinner chooseType = findViewById(R.id.chooseType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.types, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chooseType.setAdapter(adapter);
+        chooseType.setOnItemSelectedListener(this);
+
+
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -95,6 +110,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
             String info = editTextInfo.getText().toString();
             String price =editTextPrice.getText().toString();
             int price2;
+
             if(check.checkName(name)==false)
             {
                 Toast.makeText(this, "please write a real name", Toast.LENGTH_SHORT).show();
@@ -107,6 +123,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(this, "please write price", Toast.LENGTH_SHORT).show();
             } else
             {
+                Product product;
                 price2 = Integer.parseInt(price);
                 Calendar calendar = Calendar.getInstance();
                 int day  = calendar.get(Calendar.DAY_OF_MONTH);
@@ -116,13 +133,24 @@ public class Sell extends AppCompatActivity implements View.OnClickListener {
                 Calendar calendar1 = Calendar.getInstance();
                 calendar1.add(Calendar.DAY_OF_YEAR,7);
                 MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH)+1,calendar1.get(Calendar.DAY_OF_MONTH));
-//                Toast.makeText(this, date2.toString(), Toast.LENGTH_SHORT).show();
-                Product product = new Product(price2,name,info,date1,date2);
+                product = new Product(price2,name,info,date1,date2);
                 firebaseController.saveProduct(product);
                 Intent intent = new Intent(Sell.this,Buyproduct.class);
                 startActivity(intent);
             }
 
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

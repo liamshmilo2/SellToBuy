@@ -12,23 +12,23 @@
         android:layout_width="244dp"
         android:layout_height="97dp"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="80dp"
         android:gravity="center"
         android:text="you want to sell a product?"
+        android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="189dp"
         android:ems="10"
         android:hint="Name product"
@@ -89,10 +89,10 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="21dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="366dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextInfo"
         app:srcCompat="@drawable/baseline_add_photo_alternate_24" />
@@ -125,5 +125,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Spinner
+        android:id="@+id/chooseType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="323dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextInfo"
+        app:layout_constraintTop_toBottomOf="@+id/editTextInfo"
+
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

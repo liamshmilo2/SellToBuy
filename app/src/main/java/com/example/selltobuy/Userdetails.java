@@ -2,18 +2,23 @@ package com.example.selltobuy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Userdetails extends AppCompatActivity implements IFirebaseCallback {
+public class Userdetails extends AppCompatActivity implements IFirebaseCallback, View.OnClickListener {
 
     TextView nameDetails,usernamedetails,emaildetails,coinsDetails;
     FirebaseController firebaseController;
+
+    Button updateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,9 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback 
         coinsDetails=findViewById(R.id.coinsDetails);
         firebaseController=new FirebaseController(this);
         firebaseController.read(this);
+
+        updateBtn=findViewById(R.id.updateBtn);
+        updateBtn.setOnClickListener(this);
     }
 
     @Override
@@ -68,4 +76,19 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback 
 
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view==updateBtn){
+            Dialog dialog = new Dialog(Userdetails.this);
+            dialog.setContentView(R.layout.updatedialog);
+            Button btnclose = dialog.findViewById(R.id.btnclose);
+            btnclose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+    }
 }
