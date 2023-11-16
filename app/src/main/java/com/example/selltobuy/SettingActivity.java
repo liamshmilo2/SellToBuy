@@ -61,18 +61,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-//        if (view==update){
-//            Dialog dialog = new Dialog(SettingActivity.this);
-//            dialog.setContentView(R.layout.updatedialog);
-//            Button btnclose = dialog.findViewById(R.id.btnclose);
-//            btnclose.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    dialog.dismiss();
-//                }
-//            });
-//            dialog.show();
-//        }
 
         if(view==logout)
         {

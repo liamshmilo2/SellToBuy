@@ -65,6 +65,12 @@ public class FirebaseController {
 
     public void saveProduct(Product product) {
               getMYREF("products").push().setValue(product);
+
+    }
+
+    public void updateProduct(String id, int price)
+    {
+        getMYREF("products").child(id).child("price").setValue(price);
     }
 
 
@@ -77,6 +83,7 @@ public class FirebaseController {
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
                     Product p = data.getValue(Product.class);
+                    p.setPid(data.getKey());
                     productList.add(p);
                 }
                 firebaseCallback.onCallbackList(productList);
@@ -102,18 +109,11 @@ public class FirebaseController {
                         if (task.isSuccessful()) {
                             user.setId(task.getResult().getUser().getUid());
                             getMYREF("users").child(task.getResult().getUser().getUid()).setValue(user);
-                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
                             context.startActivity(new Intent(context,Buyproduct.class));
                         } else {
 
-                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(context, "Authentication failed."+task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
                         }
                     }
                 });
@@ -127,17 +127,8 @@ public class FirebaseController {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
                             context.startActivity(new Intent(context,Buyproduct.class));
                         } else {
-                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
                             Toast.makeText(context, "Authentication failed."+task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }

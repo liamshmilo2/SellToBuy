@@ -47,10 +47,6 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
             Intent intent1 = new Intent(Userdetails.this , SettingActivity.class);
             startActivity(intent1);
         }
-//        if (item.getItemId()==R.id.user){
-//            Intent intent2 = new Intent(Userdetails.this , Userdetails.class);
-//            startActivity(intent2);
-//        }
         if (item.getItemId()==R.id.buy){
             Intent intent3 = new Intent(Userdetails.this , Buyproduct.class);
             startActivity(intent3);

@@ -95,10 +95,6 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
             Intent intent3 = new Intent(Sell.this , Buyproduct.class);
             startActivity(intent3);
         }
-//        if (item.getItemId()==R.id.sell){
-//            Intent intent4 = new Intent(Sell.this , Sell.class);
-//            startActivity(intent4);
-//        }
         return true;
     }
 

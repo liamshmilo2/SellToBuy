@@ -13,6 +13,9 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     TextView nameProduct,finalDate,currentPrice,infoText;
     Product product;
     ImageButton backBtn;
+    Button price,btnSave;
+    int editPrice;
+    FirebaseController firebaseController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,11 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         infoText.setText("Info: " + product.getInfo());
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(this);
+        price=findViewById(R.id.price);
+        price.setOnClickListener(this);
+        btnSave=findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(this);
+        firebaseController=new FirebaseController(this);
 
     }
 
@@ -39,6 +47,19 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         if(view==backBtn)
         {
+            Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
+            startActivity(intent);
+        }
+        if(view==price)
+        {
+            editPrice = product.getPrice();
+            editPrice=editPrice+10;
+            currentPrice.setText("current price: " +editPrice);
+            product.setPrice(editPrice);
+        }
+        if(view==btnSave)
+        {
+            firebaseController.updateProduct(product.getPid(),editPrice);
             Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
             startActivity(intent);
         }

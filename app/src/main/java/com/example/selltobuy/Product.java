@@ -10,6 +10,7 @@ public class Product implements Serializable {
     private MyDate finalDate; // תאריך בו המוצר ימכר
 
     private String image;
+    private String pid;
 
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , String image) {
         this.price = price;
@@ -54,5 +55,17 @@ public class Product implements Serializable {
 
     public String getImage(){
         return  image;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }

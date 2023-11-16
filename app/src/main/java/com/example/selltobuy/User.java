@@ -6,7 +6,6 @@ public class User {
     private  String name;
     private String userName;
     private  String id;
-    //private  Date birthDate;
     private  int coin;
     private String email;
     private String phone;

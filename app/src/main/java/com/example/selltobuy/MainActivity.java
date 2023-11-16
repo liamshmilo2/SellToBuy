@@ -16,7 +16,6 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnSingin , btnLogin;
     TextView textHome;
-    //Dialog dialoglogin;
     Check check;
     FirebaseController firebaseController;
 
@@ -33,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSingin.setOnClickListener(this);
 
         textHome= findViewById(R.id.textHome);
-        //dialoglogin= new Dialog(this);
-        //dialoglogin.setContentView(R.layout.logindialog);
 
         check = new Check();
         firebaseController=new FirebaseController(this);
@@ -70,18 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         firebaseController.lonIn(email2.getText().toString(),pass.getText().toString());
 
-//                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
-//                        startActivity(intent);
                     }
-//                    if(check.checkName(username.getText().toString()) && check.checkPass(pass.getText().toString()))
-//                    {
-//                      //todo  save login
-//                        dialog.dismiss();
-//                    }
-//                    else
-//                    {
-//                        Toast.makeText(MainActivity.this, "check that your details is true", Toast.LENGTH_SHORT).show();
-//                    }
 
                 }
             });
@@ -125,57 +111,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         User user = new User(name.getText().toString(),newuser.getText().toString(),100,email.getText().toString(),phone.getText().toString());
                         firebaseController.createUser(user,password.getText().toString());
-//                        Intent intent = new Intent(MainActivity.this , Buyproduct.class);
-//                        startActivity(intent);
                     }
 
-
-//                    if(check.checkName(name.getText().toString()) && check.checkPass(password.getText().toString()) && check.checkEmail(email.getText().toString()) && check.checkPhone(phone.getText().toString()) && check.checkName(newuser.getText().toString()))
-//                    {
-//                        //todo  save login
-//                        dialog2.dismiss();
-//                    }
-//                    else
-//                    {
-//                        Toast.makeText(MainActivity.this, "check that your details is true", Toast.LENGTH_SHORT).show();
-//                    }
                 }
             });
             dialog2.show();
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu,menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if(item.getItemId()==R.id.home)
-//        {
-//            Intent intent = new Intent(MainActivity.this , MainActivity.class);
-//            startActivity(intent);
-//        }
-//        if (item.getItemId()==R.id.setting){
-//            Intent intent1 = new Intent(MainActivity.this , SettingActivity.class);
-//            startActivity(intent1);
-//        }
-//        if (item.getItemId()==R.id.user){
-//            Intent intent2 = new Intent(MainActivity.this , Userdetails.class);
-//            startActivity(intent2);
-//        }
-//        if (item.getItemId()==R.id.buy){
-//            Intent intent3 = new Intent(MainActivity.this , Buyproduct.class);
-//            startActivity(intent3);
-//        }
-//        if (item.getItemId()==R.id.sell){
-//            Intent intent4 = new Intent(MainActivity.this , Sell.class);
-//            startActivity(intent4);
-//        }
-//        return true;
-//    }
+
 
 
 
