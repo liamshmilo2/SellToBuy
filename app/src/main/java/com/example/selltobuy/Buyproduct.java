@@ -5,39 +5,72 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 
-public class Buyproduct extends AppCompatActivity implements IFirebaseCallback {
+public class Buyproduct extends AppCompatActivity implements IFirebaseCallback , AdapterView.OnItemSelectedListener {
     private ArrayList<Product> products;
+    private  ArrayList<TechProduct> techProducts;
     private View.OnClickListener onItemClickListener;
     private FirebaseController firebaseController;
     RecyclerView recyclerView;
     ProductAdapter productAdapter;
+    Spinner type;
+    String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyproduct);
+        type = findViewById(R.id.type);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.types, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        type.setAdapter(adapter);
+        type.setOnItemSelectedListener(this);
+
         firebaseController = new FirebaseController(this);
-        firebaseController.retrieveData(this);
 
-
+        if(text.equals("General product"))
+        {
+            firebaseController.retrieveData(this);
+        }
+        if(text.equals("Tech product"))
+        {
+            firebaseController.readTechProducts(this);
+        }
 
         products = new ArrayList<>();
+        techProducts = new  ArrayList<>();
 
 
 
         recyclerView = findViewById(R.id.recyclerview_product);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        text = adapterView.getItemAtPosition(i).toString();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
@@ -88,4 +121,28 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback {
         };
         productAdapter.setmOnItemClickListener(onItemClickListener);
     }
+
+    @Override
+    public void onCallbackTechList(ArrayList<TechProduct> techProducts1) {
+        techProducts=techProducts1;
+        productAdapter=new ProductAdapter(techProducts);
+        recyclerView.setAdapter(productAdapter);
+
+        onItemClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+                int position = viewHolder.getAdapterPosition();
+                Product productItem = techProducts.get(position);
+                Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
+                intent.putExtra("techProduct" , productItem);
+                startActivity(intent);
+            }
+        };
+        productAdapter.setmOnItemClickListener(onItemClickListener);
+
+    }
+
+
+
 }

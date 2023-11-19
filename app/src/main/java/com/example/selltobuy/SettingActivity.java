@@ -9,20 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button update,logout,change;
+    Button logout,change;
     FirebaseController firebaseController;
+    Check check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        //getIntent();
-
-//        update=findViewById(R.id.update);
-//        update.setOnClickListener(this);
 
         logout=findViewById(R.id.logout);
         logout.setOnClickListener(this);
@@ -30,6 +29,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         change=findViewById(R.id.change);
         change.setOnClickListener(this);
         firebaseController= new FirebaseController(this);
+        check=new Check();
     }
 
     @Override
@@ -40,10 +40,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId()==R.id.setting){
-//            Intent intent1 = new Intent(SettingActivity.this , SettingActivity.class);
-//            startActivity(intent1);
-//        }
         if (item.getItemId()==R.id.user){
             Intent intent2 = new Intent(SettingActivity.this , Userdetails.class);
             startActivity(intent2);
@@ -65,6 +61,35 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         if(view==logout)
         {
             firebaseController.logOut();
+        }
+
+        if(view==change)
+        {
+            Dialog dialog = new Dialog(SettingActivity.this);
+            dialog.setContentView(R.layout.logindialog);
+            Button btnok = dialog.findViewById(R.id.btnok);
+            EditText email2 = dialog.findViewById(R.id.email2);
+            EditText pass = dialog.findViewById(R.id.pass);
+            btnok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(check.checkName(email2.getText().toString())==false)
+                    {
+                        Toast.makeText(SettingActivity.this, "please write a real email", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(check.checkPass(pass.getText().toString())==false)
+                    {
+                        Toast.makeText(SettingActivity.this, "check that your password is right", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        firebaseController.swich();
+                        firebaseController.lonIn(email2.getText().toString(),pass.getText().toString());
+                    }
+
+                }
+            });
+            dialog.show();
         }
 
     }

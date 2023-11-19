@@ -73,6 +73,12 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
     }
 
     @Override
+    public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
+
+    }
+
+
+    @Override
     public void onClick(View view) {
         if (view==updateBtn){
             Dialog dialog = new Dialog(Userdetails.this);

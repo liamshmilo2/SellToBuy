@@ -34,6 +34,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     Button btnSell;
     EditText editTextName,editTextPrice,editTextInfo;
     Check check;
+    String text;
 
 
     FirebaseController firebaseController;
@@ -99,6 +100,18 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     }
 
     @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        text = adapterView.getItemAtPosition(i).toString();
+        //Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
     public void onClick(View view) {
         if(view==btnSell)
         {
@@ -120,6 +133,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
             } else
             {
                 Product product;
+                TechProduct techProduct;
                 price2 = Integer.parseInt(price);
                 Calendar calendar = Calendar.getInstance();
                 int day  = calendar.get(Calendar.DAY_OF_MONTH);
@@ -129,24 +143,25 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 Calendar calendar1 = Calendar.getInstance();
                 calendar1.add(Calendar.DAY_OF_YEAR,7);
                 MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH)+1,calendar1.get(Calendar.DAY_OF_MONTH));
-                product = new Product(price2,name,info,date1,date2);
-                firebaseController.saveProduct(product);
-                Intent intent = new Intent(Sell.this,Buyproduct.class);
-                startActivity(intent);
+                if(text.equals("General product"))
+                {
+                    product = new Product(price2,name,info,date1,date2);
+                    firebaseController.saveProduct(product);
+                    Intent intent = new Intent(Sell.this,Buyproduct.class);
+                    startActivity(intent);
+                }
+                if(text.equals("Tech product"))
+                {
+                    techProduct=new TechProduct(price2,name,info,date1,date2,"samsung");
+                    firebaseController.saveTechProduct(techProduct);
+                    Intent intent = new Intent(Sell.this,Buyproduct.class);
+                    startActivity(intent);
+                }
+
             }
 
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

@@ -68,6 +68,11 @@ public class FirebaseController {
 
     }
 
+    public void saveTechProduct(TechProduct product) {
+        getMYREF("techProducts").push().setValue(product);
+
+    }
+
     public void updateProduct(String id, int price)
     {
         getMYREF("products").child(id).child("price").setValue(price);
@@ -95,11 +100,32 @@ public class FirebaseController {
         });
     }
 
-//    public String getId(Product product , IFirebaseCallback firebaseCallback)
-//    {
-//
-//    }
 
+    public void readTechProducts( IFirebaseCallback firebaseCallback)
+    {
+        getMYREF("techProducts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList techProductList = new ArrayList<TechProduct>();
+                for(DataSnapshot data : dataSnapshot.getChildren())
+                {
+                    Product p = data.getValue(Product.class);
+                    p.setPid(data.getKey());
+                    techProductList.add(p);
+                }
+                firebaseCallback.onCallbackList(techProductList);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void updateTechProduct(String id, int price)
+    {
+        getMYREF("techProducts").child(id).child("price").setValue(price);
+    }
 
     public void createUser(User user, String password) {
         getAuth().createUserWithEmailAndPassword(user.getEmail(), password)
@@ -140,6 +166,11 @@ public class FirebaseController {
     {
         getAuth().signOut();
         context.startActivity(new Intent(context,MainActivity.class));
+    }
+
+    public void swich()
+    {
+        getAuth().signOut();
     }
 
     public void read(IFirebaseCallback firebaseCallback)
