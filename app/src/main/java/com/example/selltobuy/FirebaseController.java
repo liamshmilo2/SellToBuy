@@ -78,6 +78,11 @@ public class FirebaseController {
         getMYREF("products").child(id).child("price").setValue(price);
     }
 
+    public void updateTechProduct(String id, int price)
+    {
+        getMYREF("techProducts").child(id).child("price").setValue(price);
+    }
+
 
     public void retrieveData( IFirebaseCallback firebaseCallback)
     {
@@ -87,9 +92,19 @@ public class FirebaseController {
                 ArrayList productList = new ArrayList<Product>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
-                    Product p = data.getValue(Product.class);
-                    p.setPid(data.getKey());
-                    productList.add(p);
+                    if(data.getValue() instanceof TechProduct)
+                    {
+                        TechProduct p = data.getValue(TechProduct.class);
+                        p.setPid(data.getKey());
+                        productList.add(p);
+                    }
+                    else
+                    {
+                        Product p = data.getValue(Product.class);
+                        p.setPid(data.getKey());
+                        productList.add(p);
+                    }
+
                 }
                 firebaseCallback.onCallbackList(productList);
             }
@@ -101,7 +116,7 @@ public class FirebaseController {
     }
 
 
-    public void readTechProducts( IFirebaseCallback firebaseCallback)
+     public void readTechProducts( IFirebaseCallback firebaseCallback)
     {
         getMYREF("techProducts").addValueEventListener(new ValueEventListener() {
             @Override
@@ -122,10 +137,10 @@ public class FirebaseController {
         });
     }
 
-    public void updateTechProduct(String id, int price)
-    {
-        getMYREF("techProducts").child(id).child("price").setValue(price);
-    }
+//    public void updateTechProduct(String id, int price)
+//    {
+//        getMYREF("techProducts").child(id).child("price").setValue(price);
+//    }
 
     public void createUser(User user, String password) {
         getAuth().createUserWithEmailAndPassword(user.getEmail(), password)

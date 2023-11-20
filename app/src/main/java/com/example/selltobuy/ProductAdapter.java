@@ -39,6 +39,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.priceTextView.setText(currentProduct.getPrice()+"");
         holder.startTextView.setText(currentProduct.getStratDate().toString());
         holder.finalTextView.setText(currentProduct.getFinalDate().toString());
+
         //holder.imageView.setImageResource(holder.nameTextView.getResources().getIdentifier(currentProduct.getImage(),"drawable",holder.nameTextView.getContext().getPackageName()));
     }
 

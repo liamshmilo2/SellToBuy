@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener {
     TextView nameProduct,finalDate,currentPrice,infoText;
     Product product;
+    TechProduct techProduct;
     ImageButton backBtn;
     Button price,btnSave;
     int editPrice;
@@ -21,18 +22,32 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_one_product);
-        if(getIntent().getExtras()!=null)
-        {
-            product=(Product) getIntent().getSerializableExtra("product");
-        }
         nameProduct=findViewById(R.id.nameProduct);
         finalDate=findViewById(R.id.finalDate);
         currentPrice=findViewById(R.id.currentPrice);
         infoText=findViewById(R.id.TextInfo);
-        nameProduct.setText("Product name: " + product.getName());
-        finalDate.setText("Final date to buy: " + product.getFinalDate().toString());
-        currentPrice.setText("current price: " + product.getPrice());
-        infoText.setText("Info: " + product.getInfo());
+        if(getIntent().getExtras()!=null)
+        {
+            if(getIntent().getExtras().get("type").equals("general"))
+            {
+                product=(Product) getIntent().getSerializableExtra("product");
+                nameProduct.setText("Product name: " + product.getName());
+                finalDate.setText("Final date to buy: " + product.getFinalDate().toString());
+                currentPrice.setText("current price: " + product.getPrice());
+                infoText.setText("Info: " + product.getInfo());
+            }
+            else
+            {
+                techProduct=(TechProduct) getIntent().getSerializableExtra("techProduct");
+                nameProduct.setText("Product name: " + techProduct.getName());
+                finalDate.setText("Final date to buy: " + techProduct.getFinalDate().toString());
+                currentPrice.setText("current price: " + techProduct.getPrice());
+                infoText.setText("Info: " + techProduct.getInfo());
+            }
+
+        }
+
+
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(this);
         price=findViewById(R.id.price);
@@ -52,16 +67,36 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         }
         if(view==price)
         {
-            editPrice = product.getPrice();
-            editPrice=editPrice+10;
-            currentPrice.setText("current price: " +editPrice);
-            product.setPrice(editPrice);
+            if(product!=null)
+            {
+                editPrice = product.getPrice();
+                editPrice=editPrice+10;
+                currentPrice.setText("current price: " +editPrice);
+                product.setPrice(editPrice);
+            }
+            else {
+                editPrice = techProduct.getPrice();
+                editPrice=editPrice+10;
+                currentPrice.setText("current price: " +editPrice);
+                techProduct.setPrice(editPrice);
+            }
+
         }
         if(view==btnSave)
         {
-            firebaseController.updateProduct(product.getPid(),editPrice);
-            Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
-            startActivity(intent);
+            if(product!=null)
+            {
+                firebaseController.updateProduct(product.getPid(),editPrice);
+                Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
+                startActivity(intent);
+            }
+//            else
+//            {
+//                firebaseController.updateTechProduct(techProduct.getPid(),editPrice);
+//                Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
+//                startActivity(intent);
+//            }
+
         }
     }
 }

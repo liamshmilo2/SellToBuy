@@ -13,6 +13,8 @@ public class TechProduct extends Product{
         this.society = society;
     }
 
+
+
     public String getSociety() {
         return society;
     }

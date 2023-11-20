@@ -3,14 +3,14 @@ package com.example.selltobuy;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private  int price; //מחיר התחלתי של המוצר
-    private  String name; //שם המוצר
-    private  String info; // הסבר על המוצר
-    private MyDate stratDate; // תאריך התחלת העלאת המוצר
-    private MyDate finalDate; // תאריך בו המוצר ימכר
+    protected   int price; //מחיר התחלתי של המוצר
+    protected   String name; //שם המוצר
+    protected   String info; // הסבר על המוצר
+    protected MyDate stratDate; // תאריך התחלת העלאת המוצר
+    protected MyDate finalDate; // תאריך בו המוצר ימכר
 
-    private String image;
-    private String pid;
+    protected String image;
+    protected String pid;
 
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , String image) {
         this.price = price;
