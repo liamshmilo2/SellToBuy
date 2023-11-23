@@ -92,19 +92,9 @@ public class FirebaseController {
                 ArrayList productList = new ArrayList<Product>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
-                    if(data.getValue() instanceof TechProduct)
-                    {
-                        TechProduct p = data.getValue(TechProduct.class);
-                        p.setPid(data.getKey());
-                        productList.add(p);
-                    }
-                    else
-                    {
-                        Product p = data.getValue(Product.class);
-                        p.setPid(data.getKey());
-                        productList.add(p);
-                    }
-
+                    Product p = data.getValue(Product.class);
+                    p.setPid(data.getKey());
+                    productList.add(p);
                 }
                 firebaseCallback.onCallbackList(productList);
             }
