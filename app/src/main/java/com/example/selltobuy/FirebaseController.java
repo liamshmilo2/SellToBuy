@@ -114,11 +114,11 @@ public class FirebaseController {
                 ArrayList techProductList = new ArrayList<TechProduct>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
-                    Product p = data.getValue(Product.class);
+                    TechProduct p = data.getValue(TechProduct.class);
                     p.setPid(data.getKey());
                     techProductList.add(p);
                 }
-                firebaseCallback.onCallbackList(techProductList);
+                firebaseCallback.onCallbackTechList(techProductList);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -127,10 +127,6 @@ public class FirebaseController {
         });
     }
 
-//    public void updateTechProduct(String id, int price)
-//    {
-//        getMYREF("techProducts").child(id).child("price").setValue(price);
-//    }
 
     public void createUser(User user, String password) {
         getAuth().createUserWithEmailAndPassword(user.getEmail(), password)

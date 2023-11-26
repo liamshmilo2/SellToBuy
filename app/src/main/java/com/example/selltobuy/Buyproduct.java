@@ -102,7 +102,6 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
     @Override
     public void onCallbackList(ArrayList<Product> products1) {
-
         products=products1;
         productAdapter=new ProductAdapter(products);
         recyclerView.setAdapter(productAdapter);
