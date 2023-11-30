@@ -127,6 +127,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
         for (int i=0; i<techProducts.size(); i++)
         {
             products.add(new TechProduct(techProducts.get(i).getPrice(),techProducts.get(i).getName(),techProducts.get(i).getInfo(),techProducts.get(i).getStratDate(),techProducts.get(i).getFinalDate(),techProducts.get(i).getSociety()));
+            products.get(i).setPid(techProducts.get(i).getPid());
         }
 
         productAdapter=new ProductAdapter(products);

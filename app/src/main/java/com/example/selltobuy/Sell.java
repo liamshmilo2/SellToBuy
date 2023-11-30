@@ -1,12 +1,19 @@
 package com.example.selltobuy;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +43,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     Check check;
     String text;
 
+    ActivityResultLauncher<Intent>getPicActivityResultLauncher;
 
     FirebaseController firebaseController;
 
@@ -46,7 +54,21 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         setContentView(R.layout.activity_sell);
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
 
-        imageView = findViewById(R.id.imageView);
+
+        imageView = findViewById(R.id.imageView2);
+        imageView.setOnClickListener(this);
+        getPicActivityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode()== Activity.RESULT_OK)
+                {
+                    Intent data = result.getData();
+
+                    Bitmap bitmap = data.getParcelableExtra("data");
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        });
         button=findViewById(R.id.floatingActionButton);
         btnSell=findViewById(R.id.buttonsell);
         btnSell.setOnClickListener(this);
@@ -113,55 +135,50 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     @Override
     public void onClick(View view) {
-        if(view==btnSell)
-        {
+        if (view == imageView) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            getPicActivityResultLauncher.launch(intent);
+        }
+        if (view == btnSell) {
             String name = editTextName.getText().toString();
             String info = editTextInfo.getText().toString();
-            String price =editTextPrice.getText().toString();
+            String price = editTextPrice.getText().toString();
             int price2;
 
-            if(check.checkName(name)==false)
-            {
+            if (check.checkName(name) == false) {
                 Toast.makeText(this, "please write a real name", Toast.LENGTH_SHORT).show();
-            }
-            else if(check.chekInpo(info)==false)
-            {
+            } else if (check.chekInpo(info) == false) {
                 Toast.makeText(this, "please write any info about the product", Toast.LENGTH_SHORT).show();
-            } else if (check.chekPrice(price)==false)
-            {
+            } else if (check.chekPrice(price) == false) {
                 Toast.makeText(this, "please write price", Toast.LENGTH_SHORT).show();
-            } else
-            {
+            } else {
                 Product product;
                 TechProduct techProduct;
                 price2 = Integer.parseInt(price);
                 Calendar calendar = Calendar.getInstance();
-                int day  = calendar.get(Calendar.DAY_OF_MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
-                MyDate date1 = new MyDate(year,month+1,day);
+                MyDate date1 = new MyDate(year, month + 1, day);
                 Calendar calendar1 = Calendar.getInstance();
-                calendar1.add(Calendar.DAY_OF_YEAR,7);
-                MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR) , calendar1.get(Calendar.MONTH)+1,calendar1.get(Calendar.DAY_OF_MONTH));
-                if(text.equals("General product"))
-                {
-                    product = new Product(price2,name,info,date1,date2);
+                calendar1.add(Calendar.DAY_OF_YEAR, 7);
+                MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH) + 1, calendar1.get(Calendar.DAY_OF_MONTH));
+                if (text.equals("General product")) {
+                    product = new Product(price2, name, info, date1, date2);
                     firebaseController.saveProduct(product);
-                    Intent intent = new Intent(Sell.this,Buyproduct.class);
+
+                    Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }
-                if(text.equals("Tech product"))
-                {
-                    techProduct=new TechProduct(price2,name,info,date1,date2,"samsung");
+                if (text.equals("Tech product")) {
+                    techProduct = new TechProduct(price2, name, info, date1, date2, "samsung");
                     firebaseController.saveTechProduct(techProduct);
-                    Intent intent = new Intent(Sell.this,Buyproduct.class);
+                    Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }
 
             }
-
         }
+
     }
-
-
 }

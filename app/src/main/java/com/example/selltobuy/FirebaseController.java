@@ -2,14 +2,18 @@ package com.example.selltobuy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +23,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class FirebaseController {
@@ -28,6 +36,9 @@ public class FirebaseController {
     private static FirebaseDatabase DATABASE;
     private static DatabaseReference MYREF;
     private Context context;
+
+    private static FirebaseStorage STORAGE;
+    private static StorageReference STORAGEREFERENCE;
 
     public FirebaseController(Context context) {
         this.context = context;
@@ -63,9 +74,8 @@ public class FirebaseController {
     }
 
 
-    public void saveProduct(Product product) {
+    public void saveProduct(Product product ) {
               getMYREF("products").push().setValue(product);
-
     }
 
     public void saveTechProduct(TechProduct product) {
@@ -192,5 +202,37 @@ public class FirebaseController {
             }
         });
 
+    }
+
+    public static FirebaseStorage getSTORAGE()
+    {
+        if (STORAGE==null)
+            STORAGE = FirebaseStorage.getInstance();
+        return STORAGE;
+    }
+
+    public static StorageReference getSTORAGEREFERENCE()
+    {
+        STORAGEREFERENCE = getSTORAGE().getReference();
+        return STORAGEREFERENCE;
+    }
+
+    public void uploadImage(Bitmap bitmap , String name)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] data = baos.toByteArray();
+        StorageReference mRef = getSTORAGEREFERENCE().child(name+".jpg");
+        UploadTask uploadTask = mRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        });
     }
 }

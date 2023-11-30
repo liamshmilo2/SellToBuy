@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener {
-    TextView nameProduct,finalDate,currentPrice,infoText;
+    TextView nameProduct,finalDate,currentPrice,infoText,society;
     Product product;
     TechProduct techProduct;
     ImageButton backBtn;
@@ -26,6 +26,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         finalDate=findViewById(R.id.finalDate);
         currentPrice=findViewById(R.id.currentPrice);
         infoText=findViewById(R.id.TextInfo);
+        society=findViewById(R.id.society);
         if(getIntent().getExtras()!=null)
         {
             if(getIntent().getExtras().get("type").equals("general"))
@@ -43,6 +44,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
                 finalDate.setText("Final date to buy: " + techProduct.getFinalDate().toString());
                 currentPrice.setText("current price: " + techProduct.getPrice());
                 infoText.setText("Info: " + techProduct.getInfo());
+                society.setText("Society: " + techProduct.getSociety());
             }
 
         }

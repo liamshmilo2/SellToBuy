@@ -12,6 +12,9 @@ public class Product implements Serializable {
     protected String image;
     protected String pid;
 
+    public Product() {
+    }
+
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , String image) {
         this.price = price;
         this.name = name;
@@ -21,9 +24,7 @@ public class Product implements Serializable {
         this.image = image;
     }
 
-    public Product() {
 
-    }
 
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate) {
         this.price = price;
