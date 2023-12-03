@@ -1,5 +1,7 @@
 package com.example.selltobuy;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Product implements Serializable {
@@ -9,13 +11,13 @@ public class Product implements Serializable {
     protected MyDate stratDate; // תאריך התחלת העלאת המוצר
     protected MyDate finalDate; // תאריך בו המוצר ימכר
 
-    protected String image;
+    protected Bitmap image;
     protected String pid;
 
     public Product() {
     }
 
-    public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , String image) {
+    public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , Bitmap image) {
         this.price = price;
         this.name = name;
         this.info = info;
@@ -54,7 +56,7 @@ public class Product implements Serializable {
         return finalDate;
     }
 
-    public String getImage(){
+    public Bitmap getImage(){
         return  image;
     }
 

@@ -42,7 +42,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     EditText editTextName,editTextPrice,editTextInfo;
     Check check;
     String text;
-
+    Bitmap bitmap;
     ActivityResultLauncher<Intent>getPicActivityResultLauncher;
 
     FirebaseController firebaseController;
@@ -64,7 +64,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 {
                     Intent data = result.getData();
 
-                    Bitmap bitmap = data.getParcelableExtra("data");
+                    bitmap = data.getParcelableExtra("data");
                     imageView.setImageBitmap(bitmap);
                 }
             }
@@ -123,7 +123,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        //((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
         text = adapterView.getItemAtPosition(i).toString();
         //Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
     }
@@ -164,7 +164,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 calendar1.add(Calendar.DAY_OF_YEAR, 7);
                 MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH) + 1, calendar1.get(Calendar.DAY_OF_MONTH));
                 if (text.equals("General product")) {
-                    product = new Product(price2, name, info, date1, date2);
+                    product = new Product(price2, name, info, date1, date2,bitmap);
                     firebaseController.saveProduct(product);
 
                     Intent intent = new Intent(Sell.this, Buyproduct.class);

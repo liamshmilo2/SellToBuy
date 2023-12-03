@@ -3,6 +3,7 @@ package com.example.selltobuy;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -75,12 +76,16 @@ public class FirebaseController {
 
 
     public void saveProduct(Product product ) {
-              getMYREF("products").push().setValue(product);
+        DatabaseReference data = getMYREF("products").push();
+        uploadImage(product.getImage(),data.getKey());
+        Product product1 = new Product(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate());
+       product1.setPid(data.getKey());
+        data.setValue(product1);
     }
 
     public void saveTechProduct(TechProduct product) {
         getMYREF("techProducts").push().setValue(product);
-
+        uploadImage(product.getImage(),getMYREF("products").getKey());
     }
 
     public void updateProduct(String id, int price)
@@ -102,11 +107,23 @@ public class FirebaseController {
                 ArrayList productList = new ArrayList<Product>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
-                    Product p = data.getValue(Product.class);
+                    final Product p = data.getValue(Product.class);
                     p.setPid(data.getKey());
-                    productList.add(p);
+                    final String key = p.getPid();
+                    final long ONE_MEGABYTE = 1024*1024;
+                    StorageReference mRef = getSTORAGEREFERENCE().child(  key + ".jpg");
+                    mRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                            productList.add(new Product(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap));
+                            firebaseCallback.onCallbackList(productList);
+                        }
+                    });
+
+                   // productList.add(p);
                 }
-                firebaseCallback.onCallbackList(productList);
+              //  firebaseCallback.onCallbackList(productList);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

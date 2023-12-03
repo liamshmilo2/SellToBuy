@@ -18,9 +18,10 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Buyproduct extends AppCompatActivity implements IFirebaseCallback , AdapterView.OnItemSelectedListener {
+public class Buyproduct extends AppCompatActivity implements IFirebaseCallback , AdapterView.OnItemSelectedListener, Serializable {
     private ArrayList<Product> products;
     private View.OnClickListener onItemClickListener;
     private FirebaseController firebaseController;
@@ -112,8 +113,9 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
                 RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
                 int position = viewHolder.getAdapterPosition();
                 Product productItem = products.get(position);
+                Product product = new Product(productItem.getPrice(),productItem.getName(),productItem.getInfo(),productItem.getStratDate(),productItem.getFinalDate());
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
-                intent.putExtra("product" , productItem);
+                intent.putExtra("product" , product);
                 intent.putExtra("type" , "general");
                 startActivity(intent);
             }

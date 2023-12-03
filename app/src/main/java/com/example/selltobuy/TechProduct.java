@@ -6,10 +6,10 @@ public class TechProduct extends Product{
     public TechProduct() {
     }
 
-    public TechProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, String image, String society) {
-        super(price, name, info, stratDate, finalDate, image);
-        this.society = society;
-    }
+//    public TechProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, String image, String society) {
+//        super(price, name, info, stratDate, finalDate, image);
+//        this.society = society;
+//    }
 
     public TechProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate ,String society) {
         super(price, name, info, stratDate, finalDate);

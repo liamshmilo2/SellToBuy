@@ -4,10 +4,10 @@ public class ChildProduct extends Product{
 
     private int age;
 
-    public ChildProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, String image, int age) {
-        super(price, name, info, stratDate, finalDate, image);
-        this.age = age;
-    }
+//    public ChildProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, String image, int age) {
+//        super(price, name, info, stratDate, finalDate, image);
+//        this.age = age;
+//    }
 
     public int getAge() {
         return age;
