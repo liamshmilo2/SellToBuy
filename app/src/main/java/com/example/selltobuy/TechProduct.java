@@ -1,15 +1,17 @@
 package com.example.selltobuy;
 
+import android.graphics.Bitmap;
+
 public class TechProduct extends Product{
     private String society;
 
     public TechProduct() {
     }
 
-//    public TechProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, String image, String society) {
-//        super(price, name, info, stratDate, finalDate, image);
-//        this.society = society;
-//    }
+    public TechProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate, Bitmap image, String society) {
+        super(price, name, info, stratDate, finalDate, image);
+        this.society = society;
+    }
 
     public TechProduct(int price, String name, String info, MyDate stratDate, MyDate finalDate ,String society) {
         super(price, name, info, stratDate, finalDate);

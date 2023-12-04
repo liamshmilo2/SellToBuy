@@ -151,6 +151,8 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 Toast.makeText(this, "please write any info about the product", Toast.LENGTH_SHORT).show();
             } else if (check.chekPrice(price) == false) {
                 Toast.makeText(this, "please write price", Toast.LENGTH_SHORT).show();
+            } else if (check.chekBitmap(bitmap)==false) {
+                Toast.makeText(this, "please take any picture of yor product", Toast.LENGTH_SHORT).show();
             } else {
                 Product product;
                 TechProduct techProduct;

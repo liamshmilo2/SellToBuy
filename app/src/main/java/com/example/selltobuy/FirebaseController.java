@@ -84,8 +84,11 @@ public class FirebaseController {
     }
 
     public void saveTechProduct(TechProduct product) {
-        getMYREF("techProducts").push().setValue(product);
-        uploadImage(product.getImage(),getMYREF("products").getKey());
+        DatabaseReference data = getMYREF("techProducts").push();
+        uploadImage(product.getImage(),data.getKey());
+        TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(),product.getSociety());
+        product1.setPid(data.getKey());
+        data.setValue(product1);
     }
 
     public void updateProduct(String id, int price)
@@ -123,7 +126,7 @@ public class FirebaseController {
 
                    // productList.add(p);
                 }
-              //  firebaseCallback.onCallbackList(productList);
+               //firebaseCallback.onCallbackList(productList);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -141,11 +144,23 @@ public class FirebaseController {
                 ArrayList techProductList = new ArrayList<TechProduct>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
                 {
-                    TechProduct p = data.getValue(TechProduct.class);
+                    final TechProduct p = data.getValue(TechProduct.class);
                     p.setPid(data.getKey());
-                    techProductList.add(p);
+                    final String key = p.getPid();
+                    final long ONE_MEGABYTE = 1024*1024;
+                    StorageReference mRef = getSTORAGEREFERENCE().child(  key + ".jpg");
+                    mRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                            techProductList.add(new TechProduct(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap,p.getSociety()));
+                            firebaseCallback.onCallbackList(techProductList);
+
+                        }
+                    });
+                    //techProductList.add(p);
                 }
-                firebaseCallback.onCallbackTechList(techProductList);
+                //firebaseCallback.onCallbackTechList(techProductList);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

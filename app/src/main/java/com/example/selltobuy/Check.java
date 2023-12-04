@@ -1,5 +1,6 @@
 package com.example.selltobuy;
 
+import android.graphics.Bitmap;
 import android.util.Patterns;
 
 public class Check {
@@ -50,6 +51,12 @@ public class Check {
         return false;
     }
 
+    public boolean chekBitmap(Bitmap bitmap)
+    {
+        if(bitmap!=null)
+            return true;
+        return false;
+    }
 
 
 }
