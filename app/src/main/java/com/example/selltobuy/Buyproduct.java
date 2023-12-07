@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -56,7 +57,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        //((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
         text = adapterView.getItemAtPosition(i).toString();
         if(text.equals("General product"))
         {
@@ -113,7 +114,9 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
                 RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
                 int position = viewHolder.getAdapterPosition();
                 Product productItem = products.get(position);
+
                 Product product = new Product(productItem.getPrice(),productItem.getName(),productItem.getInfo(),productItem.getStratDate(),productItem.getFinalDate());
+                product.setPid(productItem.getPid());
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
                 intent.putExtra("product" , product);
                 intent.putExtra("type" , "general");
@@ -141,9 +144,12 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
                 RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
                 int position = viewHolder.getAdapterPosition();
                 TechProduct productItem = (TechProduct) products.get(position);
+                TechProduct techProduct = new TechProduct(productItem.getPrice(),productItem.getName(),productItem.getInfo(),productItem.getStratDate(),productItem.getFinalDate(),productItem.getSociety());
+                techProduct.setPid(productItem.getPid());
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
-                intent.putExtra("techProduct" , productItem);
+                intent.putExtra("techProduct" , techProduct);
                 intent.putExtra("type" , "tech");
+                //intent.putExtra("image" , techProduct.getImage());
                 startActivity(intent);
             }
         };

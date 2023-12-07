@@ -119,7 +119,9 @@ public class FirebaseController {
                         @Override
                         public void onSuccess(byte[] bytes) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                            productList.add(new Product(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap));
+                            Product product = new Product(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap);
+                            product.setPid(key);
+                            productList.add(product);
                             firebaseCallback.onCallbackList(productList);
                         }
                     });
@@ -153,7 +155,9 @@ public class FirebaseController {
                         @Override
                         public void onSuccess(byte[] bytes) {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                            techProductList.add(new TechProduct(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap,p.getSociety()));
+                            TechProduct techProduct = new TechProduct(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap,p.getSociety());
+                            techProduct.setPid(key);
+                            techProductList.add(techProduct);
                             firebaseCallback.onCallbackList(techProductList);
 
                         }

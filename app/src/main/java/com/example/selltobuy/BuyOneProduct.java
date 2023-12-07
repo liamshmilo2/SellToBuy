@@ -3,14 +3,18 @@ package com.example.selltobuy;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener {
     TextView nameProduct,finalDate,currentPrice,infoText,society;
+    ImageView productImage;
+    Bitmap bitmap;
     Product product;
     TechProduct techProduct;
     ImageButton backBtn;
@@ -27,6 +31,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         currentPrice=findViewById(R.id.currentPrice);
         infoText=findViewById(R.id.TextInfo);
         society=findViewById(R.id.society);
+        productImage=findViewById(R.id.productImage);
         if(getIntent().getExtras()!=null)
         {
             if(getIntent().getExtras().get("type").equals("general"))
@@ -36,6 +41,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
                 finalDate.setText("Final date to buy: " + product.getFinalDate().toString());
                 currentPrice.setText("current price: " + product.getPrice());
                 infoText.setText("Info: " + product.getInfo());
+
             }
             else
             {
