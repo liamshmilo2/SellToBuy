@@ -173,7 +173,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     startActivity(intent);
                 }
                 if (text.equals("Tech product")) {
-                    techProduct = new TechProduct(price2, name, info, date1, date2, "samsung");
+                    techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, "samsung");
                     firebaseController.saveTechProduct(techProduct);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);

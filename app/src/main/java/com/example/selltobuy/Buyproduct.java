@@ -144,6 +144,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
                 RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
                 int position = viewHolder.getAdapterPosition();
                 TechProduct productItem = (TechProduct) products.get(position);
+
                 TechProduct techProduct = new TechProduct(productItem.getPrice(),productItem.getName(),productItem.getInfo(),productItem.getStratDate(),productItem.getFinalDate(),productItem.getSociety());
                 techProduct.setPid(productItem.getPid());
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);

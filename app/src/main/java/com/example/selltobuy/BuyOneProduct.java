@@ -15,8 +15,8 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     TextView nameProduct,finalDate,currentPrice,infoText,society;
     ImageView productImage;
     Bitmap bitmap;
-    Product product;
-    TechProduct techProduct;
+    Product product=null;
+    TechProduct techProduct=null;
     ImageButton backBtn;
     Button price,btnSave;
     int editPrice;
