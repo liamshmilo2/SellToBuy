@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
     ProductAdapter productAdapter;
     Spinner type;
     String text;
+    Bitmap bitmap;
 
 
 
@@ -57,7 +59,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
         text = adapterView.getItemAtPosition(i).toString();
         if(text.equals("General product"))
         {
@@ -115,11 +117,17 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
                 int position = viewHolder.getAdapterPosition();
                 Product productItem = products.get(position);
 
+
                 Product product = new Product(productItem.getPrice(),productItem.getName(),productItem.getInfo(),productItem.getStratDate(),productItem.getFinalDate());
                 product.setPid(productItem.getPid());
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
                 intent.putExtra("product" , product);
                 intent.putExtra("type" , "general");
+                bitmap=productItem.getImage();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                intent.putExtra("bitmap", byteArray);
                 startActivity(intent);
             }
         };
@@ -131,7 +139,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
         products.clear();
         for (int i=0; i<techProducts.size(); i++)
         {
-            products.add(new TechProduct(techProducts.get(i).getPrice(),techProducts.get(i).getName(),techProducts.get(i).getInfo(),techProducts.get(i).getStratDate(),techProducts.get(i).getFinalDate(),techProducts.get(i).getSociety()));
+            products.add(new TechProduct(techProducts.get(i).getPrice(),techProducts.get(i).getName(),techProducts.get(i).getInfo(),techProducts.get(i).getStratDate(),techProducts.get(i).getFinalDate(),techProducts.get(i).getImage(),techProducts.get(i).getSociety()));
             products.get(i).setPid(techProducts.get(i).getPid());
         }
 
@@ -150,7 +158,11 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
                 intent.putExtra("techProduct" , techProduct);
                 intent.putExtra("type" , "tech");
-                //intent.putExtra("image" , techProduct.getImage());
+                bitmap=productItem.getImage();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                intent.putExtra("bitmap", byteArray);
                 startActivity(intent);
             }
         };

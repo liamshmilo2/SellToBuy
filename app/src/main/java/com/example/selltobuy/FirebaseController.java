@@ -158,7 +158,7 @@ public class FirebaseController {
                             TechProduct techProduct = new TechProduct(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap,p.getSociety());
                             techProduct.setPid(key);
                             techProductList.add(techProduct);
-                            firebaseCallback.onCallbackList(techProductList);
+                            firebaseCallback.onCallbackTechList(techProductList);
 
                         }
                     });

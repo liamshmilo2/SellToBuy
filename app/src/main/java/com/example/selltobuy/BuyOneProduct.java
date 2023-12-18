@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,10 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
                 finalDate.setText("Final date to buy: " + product.getFinalDate().toString());
                 currentPrice.setText("current price: " + product.getPrice());
                 infoText.setText("Info: " + product.getInfo());
+                byte[] byteArray = getIntent().getByteArrayExtra("bitmap");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                productImage.setImageBitmap(bitmap);
+
 
             }
             else
@@ -51,6 +56,10 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
                 currentPrice.setText("current price: " + techProduct.getPrice());
                 infoText.setText("Info: " + techProduct.getInfo());
                 society.setText("Society: " + techProduct.getSociety());
+                byte[] byteArray = getIntent().getByteArrayExtra("bitmap");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                productImage.setImageBitmap(bitmap);
+
             }
 
         }
