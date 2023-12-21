@@ -30,13 +30,15 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
 public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener {
 
-    ImageView imageView;
+    ImageView imageView, imageFromGallery;
+
     FloatingActionButton button;
     Button btnSell;
     EditText editTextName,editTextPrice,editTextInfo;
@@ -45,6 +47,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     Bitmap bitmap;
     ActivityResultLauncher<Intent>getPicActivityResultLauncher;
 
+    ActivityResultLauncher<Intent>getGalleryActivityResultLauncher;
     FirebaseController firebaseController;
 
     @SuppressLint("MissingInflatedId")
@@ -57,6 +60,9 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
         imageView = findViewById(R.id.imageView2);
         imageView.setOnClickListener(this);
+
+        imageFromGallery=findViewById(R.id.imageFromGallery);
+        imageFromGallery.setOnClickListener(this);
         getPicActivityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -69,6 +75,32 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 }
             }
         });
+
+
+        getGalleryActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>()
+                {
+                    @Override
+                    public void onActivityResult(ActivityResult result)
+                    {
+                        if (result.getResultCode() == Activity.RESULT_OK)
+                        {
+                            Intent filePath=result.getData();
+                            try
+                            {
+                                bitmap=MediaStore.Images.Media.getBitmap(getContentResolver(),filePath.getData());
+                                imageFromGallery.setImageBitmap(bitmap);
+                            }
+                            catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+
+
         button=findViewById(R.id.floatingActionButton);
         btnSell=findViewById(R.id.buttonsell);
         btnSell.setOnClickListener(this);
@@ -96,6 +128,16 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 //
 //            }
 //        });
+    }
+
+    private static final int PICK_IMAGE_REQUEST = 234;
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        //startActivityForResult(Intent.createChooser(intent, "Select an File"), PICK_IMAGE_REQUEST);
+        getGalleryActivityResultLauncher.launch(intent);
+
     }
 
     @Override
@@ -138,6 +180,11 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         if (view == imageView) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             getPicActivityResultLauncher.launch(intent);
+        }
+        if (view==imageFromGallery)
+        {
+            showFileChooser();
+
         }
         if (view == btnSell) {
             String name = editTextName.getText().toString();
