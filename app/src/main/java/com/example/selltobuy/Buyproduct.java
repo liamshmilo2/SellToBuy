@@ -76,12 +76,16 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
     }
 
+
+    //הפעולה מציגה את התפריט
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
 
+
+    //הפעוןלה בודקת איזה כפתור בתפריט נלחץ ומעבירה לעמוד המתאים
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==R.id.setting){
@@ -104,6 +108,8 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
     }
 
+
+    //הפעולה מציגה את רשימת המוצרים הרגילים
     @Override
     public void onCallbackList(ArrayList<Product> products1) {
         products=products1;
@@ -134,6 +140,9 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
         productAdapter.setmOnItemClickListener(onItemClickListener);
     }
 
+
+
+    //הפעולה מציגה את רשימת המוצרים הטכנולוגיים
     @Override
     public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
         products.clear();
