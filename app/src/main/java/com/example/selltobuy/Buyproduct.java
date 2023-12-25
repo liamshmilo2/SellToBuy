@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -34,6 +35,14 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
     Bitmap bitmap;
 
 
+    private BatteryReciver batteryReciver;
+    protected void onStart ()
+    {
+        super.onStart();
+        registerReceiver(batteryReciver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        batteryReciver=new BatteryReciver();
     }
 
     @Override
@@ -178,5 +188,11 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
         productAdapter.setmOnItemClickListener(onItemClickListener);
     }
 
+
+    protected void onDestroy ()
+    {
+        super.onDestroy();
+        unregisterReceiver(batteryReciver);
+    }
 
 }
