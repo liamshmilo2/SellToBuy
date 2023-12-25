@@ -3,12 +3,12 @@ package com.example.selltobuy;
 import java.util.List;
 
 public class User {
-    private  String name;
-    private String userName;
-    private  String id;
-    private  int coin;
-    private String email;
-    private String phone;
+    private  String name; //שם
+    private String userName; //שם משתמש
+    private  String id; //מזהה אישי
+    private  int coin; //מספר מטבעות
+    private String email; //אימייל
+    private String phone; // מספר טלפון
     //private List<Product> buyList;
     //private  List<Product> sellList;
 
@@ -25,6 +25,7 @@ public class User {
         this.phone = phone;
     }
 
+    //הפעולה יוצרת משתמש
     public User(String name, String userName, int coin, String email, String phone) {
         this.name = name;
         this.userName = userName;

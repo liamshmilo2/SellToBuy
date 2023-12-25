@@ -14,9 +14,11 @@ public class Product implements Serializable {
     protected Bitmap image;
     protected String pid;
 
+
     public Product() {
     }
 
+    //הפעולה יוצרת מוצר חדש
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate , Bitmap image) {
         this.price = price;
         this.name = name;
@@ -28,6 +30,7 @@ public class Product implements Serializable {
 
 
 
+    //הפעולה יוצרת מוצר חדש
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate) {
         this.price = price;
         this.name = name;

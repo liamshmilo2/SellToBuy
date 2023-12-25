@@ -140,12 +140,15 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     }
 
+
+    //הפולה יוצרת את ה menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
 
+    //פעולת ההצגה של ה menu שבודקת מה המשתמש בחר
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==R.id.setting){

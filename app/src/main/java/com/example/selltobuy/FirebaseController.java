@@ -45,6 +45,8 @@ public class FirebaseController {
         this.context = context;
     }
 
+
+    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת FirebaseAuth נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
     public static FirebaseAuth getAuth()
     {
         if(MAUTH == null)
@@ -52,6 +54,8 @@ public class FirebaseController {
         return MAUTH;
     }
 
+
+    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת FirebaseDatabase נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
      public static FirebaseDatabase getDATABASE()
      {
         if(DATABASE==null)
@@ -61,12 +65,15 @@ public class FirebaseController {
         return DATABASE;
      }
 
+
+     //פונקצייה זו מבטיחה שמופע יחיד של מחלקת DatabaseReference נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע
      public static DatabaseReference getMYREF(String key)
      {
          MYREF = getDATABASE().getReference(key);
          return MYREF;
      }
 
+     //הפעולה בודקת אם קיים משתמש מחובר ומחזירה בהתאם
     public boolean currentUser()
     {
         if(getAuth().getCurrentUser()==null)
@@ -75,6 +82,8 @@ public class FirebaseController {
     }
 
 
+
+    //הפעולה שומרת עצם מהמחלקה Product בפיירבייס
     public void saveProduct(Product product ) {
         DatabaseReference data = getMYREF("products").push();
         uploadImage(product.getImage(),data.getKey());
@@ -83,6 +92,7 @@ public class FirebaseController {
         data.setValue(product1);
     }
 
+    //הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
     public void saveTechProduct(TechProduct product) {
         DatabaseReference data = getMYREF("techProducts").push();
         uploadImage(product.getImage(),data.getKey());
@@ -91,17 +101,20 @@ public class FirebaseController {
         data.setValue(product1);
     }
 
+    //הפעולה מעדכנת את מחירו של מוצר בפיירבייס
     public void updateProduct(String id, int price)
     {
         getMYREF("products").child(id).child("price").setValue(price);
     }
 
+    //הפעולה מעדכנת את מחירו של המוצר הטכנולוגי
     public void updateTechProduct(String id, int price)
     {
         getMYREF("techProducts").child(id).child("price").setValue(price);
     }
 
 
+    //הפעולה המציגה את רשימת המוצרים
     public void retrieveData( IFirebaseCallback firebaseCallback)
     {
         getMYREF("products").addValueEventListener(new ValueEventListener() {
@@ -138,6 +151,7 @@ public class FirebaseController {
     }
 
 
+    //הפעולה המציגה את רשימת המוצרים הטכנולוגיים
      public void readTechProducts( IFirebaseCallback firebaseCallback)
     {
         getMYREF("techProducts").addValueEventListener(new ValueEventListener() {
@@ -174,6 +188,7 @@ public class FirebaseController {
     }
 
 
+    //הפעולה יוצרת משתמש חדש ושומרת אותו בפיירבייס
     public void createUser(User user, String password) {
         getAuth().createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -193,6 +208,7 @@ public class FirebaseController {
     }
 
 
+    //פעולת התחברות של משתמש קיים לאפליקציה
     public void lonIn (String email , String password)
     {
         getAuth().signInWithEmailAndPassword(email, password)
@@ -209,17 +225,21 @@ public class FirebaseController {
                 });
     }
 
+    //הפעולה מנתקת את המשתמש המחובר
     public void logOut()
     {
         getAuth().signOut();
         context.startActivity(new Intent(context,MainActivity.class));
     }
 
+    //פעולה המנתקת את המשתמש המחובר כדי לאפשר להחליף למשתמש אחר
     public void swich()
     {
         getAuth().signOut();
     }
 
+
+    //הפעולה לקריאת המשתמש המחובר כדי להציג את פרטיו
     public void read(IFirebaseCallback firebaseCallback)
     {
         FirebaseUser user = getAuth().getCurrentUser();
@@ -240,6 +260,8 @@ public class FirebaseController {
 
     }
 
+
+    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת FireBaseStorage נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
     public static FirebaseStorage getSTORAGE()
     {
         if (STORAGE==null)
@@ -247,12 +269,14 @@ public class FirebaseController {
         return STORAGE;
     }
 
+    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת StorageReference נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
     public static StorageReference getSTORAGEREFERENCE()
     {
         STORAGEREFERENCE = getSTORAGE().getReference();
         return STORAGEREFERENCE;
     }
 
+    //הפעולה שומרת תמונה שהתקבלה ב storage של הפיירבייס
     public void uploadImage(Bitmap bitmap , String name)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

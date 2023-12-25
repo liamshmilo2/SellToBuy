@@ -3,10 +3,11 @@ package com.example.selltobuy;
 import java.io.Serializable;
 
 public class MyDate implements Serializable {
-    private  int yaer;
-    private  int month;
-    private  int day;
+    private  int yaer; //שנה
+    private  int month; //חודש
+    private  int day; //יום
 
+    //הפעולה יוצרת תאריך חדש
     public MyDate(int yaer, int month, int day) {
         this.yaer = yaer;
         this.month = month;
