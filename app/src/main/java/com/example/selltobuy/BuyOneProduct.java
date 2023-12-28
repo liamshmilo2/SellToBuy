@@ -11,8 +11,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener , IFirebaseCallback{
     TextView nameProduct,finalDate,currentPrice,infoText,society;
     ImageView productImage;
     Bitmap bitmap;
@@ -22,6 +25,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     Button price,btnSave;
     int editPrice;
     FirebaseController firebaseController;
+    String buyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,6 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
                 byte[] byteArray = getIntent().getByteArrayExtra("bitmap");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 productImage.setImageBitmap(bitmap);
-
 
             }
             else
@@ -72,6 +75,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         btnSave=findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
         firebaseController=new FirebaseController(this);
+        firebaseController.read(this);
 
     }
 
@@ -103,17 +107,32 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         {
             if(product!=null)
             {
-                firebaseController.updateProduct(product.getPid(),editPrice);
+                firebaseController.updateProduct(product.getPid(),editPrice,buyId);
                 Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
                 startActivity(intent);
             }
             else
             {
-                firebaseController.updateTechProduct(techProduct.getPid(),editPrice);
+                firebaseController.updateTechProduct(techProduct.getPid(),editPrice,buyId);
                 Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
                 startActivity(intent);
             }
 
         }
+    }
+
+    @Override
+    public void onCallbackUser(User user) {
+        buyId=user.getId();
+    }
+
+    @Override
+    public void onCallbackList(ArrayList<Product> products) {
+
+    }
+
+    @Override
+    public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
+
     }
 }

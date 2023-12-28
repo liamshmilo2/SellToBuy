@@ -31,11 +31,12 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener {
+public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener , IFirebaseCallback{
 
     ImageView imageView, imageFromGallery;
 
@@ -49,6 +50,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     ActivityResultLauncher<Intent>getGalleryActivityResultLauncher;
     FirebaseController firebaseController;
+    String sellId;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,6 +58,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
         Objects.requireNonNull(getSupportActionBar()).setBackgroundDrawable(new ColorDrawable(getColor(R.color.black)));
+
 
 
         imageView = findViewById(R.id.imageView2);
@@ -115,6 +118,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         chooseType.setAdapter(adapter);
         chooseType.setOnItemSelectedListener(this);
 
+        firebaseController.read(this);
 
 
 //        button.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +172,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        //((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
         text = adapterView.getItemAtPosition(i).toString();
         //Toast.makeText(adapterView.getContext(),text,Toast.LENGTH_SHORT).show();
     }
@@ -216,21 +220,37 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 calendar1.add(Calendar.DAY_OF_YEAR, 7);
                 MyDate date2 = new MyDate(calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH) + 1, calendar1.get(Calendar.DAY_OF_MONTH));
                 if (text.equals("General product")) {
+
                     product = new Product(price2, name, info, date1, date2,bitmap);
-                    firebaseController.saveProduct(product);
+                    firebaseController.saveProduct(product,sellId);
 
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }
                 if (text.equals("Tech product")) {
                     techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, "samsung");
-                    firebaseController.saveTechProduct(techProduct);
+                    firebaseController.saveTechProduct(techProduct,sellId);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }
 
             }
         }
+
+    }
+
+    @Override
+    public void onCallbackUser(User user) {
+        sellId=user.getId();
+    }
+
+    @Override
+    public void onCallbackList(ArrayList<Product> products) {
+
+    }
+
+    @Override
+    public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
 
     }
 }

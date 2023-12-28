@@ -84,33 +84,47 @@ public class FirebaseController {
 
 
     //הפעולה שומרת עצם מהמחלקה Product בפיירבייס
-    public void saveProduct(Product product ) {
+    public void saveProduct(Product product , String idSell) {
         DatabaseReference data = getMYREF("products").push();
         uploadImage(product.getImage(),data.getKey());
         Product product1 = new Product(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate());
-       product1.setPid(data.getKey());
+        product1.setPid(data.getKey());
+        product1.setSellId(idSell);
+        product1.setBuyId(null);
         data.setValue(product1);
     }
 
     //הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
-    public void saveTechProduct(TechProduct product) {
+    public void saveTechProduct(TechProduct product,String idSell) {
         DatabaseReference data = getMYREF("techProducts").push();
         uploadImage(product.getImage(),data.getKey());
         TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(),product.getSociety());
         product1.setPid(data.getKey());
+        product1.setSellId(idSell);
+        product1.setBuyId(null);
         data.setValue(product1);
     }
 
     //הפעולה מעדכנת את מחירו של מוצר בפיירבייס
-    public void updateProduct(String id, int price)
+    public void updateProduct(String id, int price,String idBuy)
     {
-        getMYREF("products").child(id).child("price").setValue(price);
+        String sellId = getMYREF("products").child(id).child("sellId").toString();
+        if(sellId!=idBuy)
+        {
+            getMYREF("products").child(id).child("price").setValue(price);
+            getMYREF("products").child(id).child("buyId").setValue(idBuy);
+        }
     }
 
     //הפעולה מעדכנת את מחירו של המוצר הטכנולוגי
-    public void updateTechProduct(String id, int price)
+    public void updateTechProduct(String id, int price,String idBuy)
     {
-        getMYREF("techProducts").child(id).child("price").setValue(price);
+        String sellId = getMYREF("techProducts").child(id).child("sellId").toString();
+        if(sellId!=idBuy)
+        {
+            getMYREF("techProducts").child(id).child("price").setValue(price);
+            getMYREF("techProducts").child(id).child("buyId").setValue(idBuy);
+        }
     }
 
 
@@ -134,6 +148,8 @@ public class FirebaseController {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                             Product product = new Product(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap);
                             product.setPid(key);
+                            product.setSellId(p.getSellId());
+                            product.setBuyId(p.getBuyId());
                             productList.add(product);
                             firebaseCallback.onCallbackList(productList);
                         }

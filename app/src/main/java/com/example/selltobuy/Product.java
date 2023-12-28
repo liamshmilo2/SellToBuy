@@ -14,6 +14,9 @@ public class Product implements Serializable {
     protected Bitmap image;
     protected String pid;
 
+    protected String sellId; // המזהה של המשתמש שמכר את המוצר
+    protected String buyId; // המזהה של המשתמש האחרון שהעלה את מחיר המוצר
+
 
     public Product() {
     }
@@ -29,6 +32,21 @@ public class Product implements Serializable {
     }
 
 
+    public String getSellId() {
+        return sellId;
+    }
+
+    public void setSellId(String sellId) {
+        this.sellId = sellId;
+    }
+
+    public String getBuyId() {
+        return buyId;
+    }
+
+    public void setBuyId(String buyId) {
+        this.buyId = buyId;
+    }
 
     //הפעולה יוצרת מוצר חדש
     public Product(int price, String name, String info, MyDate stratDate, MyDate finalDate) {

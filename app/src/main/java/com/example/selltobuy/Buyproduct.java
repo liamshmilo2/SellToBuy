@@ -69,7 +69,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        ((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
+        //((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);
         text = adapterView.getItemAtPosition(i).toString();
         if(text.equals("General product"))
         {
@@ -136,6 +136,8 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback ,
 
                 Product product = new Product(productItem.getPrice(),productItem.getName(),productItem.getInfo(),productItem.getStratDate(),productItem.getFinalDate());
                 product.setPid(productItem.getPid());
+                product.setSellId(productItem.getSellId());
+                product.setBuyId(productItem.getBuyId());
                 Intent intent = new Intent(Buyproduct.this, BuyOneProduct.class);
                 intent.putExtra("product" , product);
                 intent.putExtra("type" , "general");

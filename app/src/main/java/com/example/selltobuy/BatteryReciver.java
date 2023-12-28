@@ -12,7 +12,7 @@ public class BatteryReciver extends BroadcastReceiver{
         int battery = intent.getIntExtra("level" , 0);
         if(battery<5)
         {
-            Toast.makeText(context, "low battery, charge your phone", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "low battery, charge your phone", Toast.LENGTH_SHORT).show();
         }
     }
 }
