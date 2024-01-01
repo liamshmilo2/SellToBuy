@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -51,6 +52,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     ActivityResultLauncher<Intent>getGalleryActivityResultLauncher;
     FirebaseController firebaseController;
     String sellId;
+    String name,info,price,society;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -193,10 +195,26 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
             showFileChooser();
 
         }
+        if (text.equals("Tech product"))
+        {
+            Dialog dialog = new Dialog(Sell.this);
+            dialog.setContentView(R.layout.societydiolog);
+            Button btnSociety = dialog.findViewById(R.id.btnSociety);
+            EditText societyText = dialog.findViewById(R.id.editSociety);
+            btnSociety.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    society=societyText.getText().toString();
+                    if (view==btnSociety)
+                        dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
         if (view == btnSell) {
-            String name = editTextName.getText().toString();
-            String info = editTextInfo.getText().toString();
-            String price = editTextPrice.getText().toString();
+            name = editTextName.getText().toString();
+            info = editTextInfo.getText().toString();
+            price = editTextPrice.getText().toString();
             int price2;
 
             if (check.checkName(name) == false) {
@@ -228,7 +246,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     startActivity(intent);
                 }
                 if (text.equals("Tech product")) {
-                    techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, "samsung");
+                    techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, society);
                     firebaseController.saveTechProduct(techProduct,sellId);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
