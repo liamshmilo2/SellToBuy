@@ -9,8 +9,8 @@ public class User {
     private  int coin; //מספר מטבעות
     private String email; //אימייל
     private String phone; // מספר טלפון
-    //private List<Product> buyList;
-    //private  List<Product> sellList;
+    private List<Product> buyList; //מוצרים שהמשתמש קנה
+    private  List<Product> sellList; // מוצרים שהמשתמש מכר
 
 
     public User() {
@@ -81,5 +81,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Product> getBuyList() {
+        return buyList;
+    }
+
+    public void setBuyList(List<Product> buyList) {
+        this.buyList = buyList;
+    }
+
+    public List<Product> getSellList() {
+        return sellList;
+    }
+
+    public void setSellList(List<Product> sellList) {
+        this.sellList = sellList;
     }
 }

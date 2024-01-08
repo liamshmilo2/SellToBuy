@@ -1,5 +1,7 @@
 package com.example.selltobuy;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -8,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -242,12 +246,23 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     product = new Product(price2, name, info, date1, date2,bitmap);
                     firebaseController.saveProduct(product,sellId);
 
+                    Intent intent2 = new Intent(this, saleReciver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent2, FLAG_IMMUTABLE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (86400000), pendingIntent);
+
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }
                 if (text.equals("Tech product")) {
                     techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, society);
                     firebaseController.saveTechProduct(techProduct,sellId);
+
+                    Intent intent2 = new Intent(this, saleReciver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent2, FLAG_IMMUTABLE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (86400000), pendingIntent);
+
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }

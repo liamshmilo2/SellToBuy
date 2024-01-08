@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -131,12 +132,13 @@ public class FirebaseController {
     //הפעולה המציגה את רשימת המוצרים
     public void retrieveData( IFirebaseCallback firebaseCallback)
     {
-        getMYREF("products").addValueEventListener(new ValueEventListener() {
+        Query query = getMYREF("products").orderByChild("stratDate");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList productList = new ArrayList<Product>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
-                {
+                {  
                     final Product p = data.getValue(Product.class);
                     p.setPid(data.getKey());
                     final String key = p.getPid();
@@ -170,7 +172,8 @@ public class FirebaseController {
     //הפעולה המציגה את רשימת המוצרים הטכנולוגיים
      public void readTechProducts( IFirebaseCallback firebaseCallback)
     {
-        getMYREF("techProducts").addValueEventListener(new ValueEventListener() {
+        Query query = getMYREF("techProducts").orderByChild("stratDate");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList techProductList = new ArrayList<TechProduct>();
