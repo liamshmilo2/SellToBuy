@@ -8,8 +8,6 @@ import android.widget.Toast;
 public class MyJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
- //       MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.gong);
-//        mediaPlayer.start();
         Toast.makeText(getApplicationContext(), "good", Toast.LENGTH_SHORT).show();
         return false;
     }

@@ -13,9 +13,9 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,10 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,7 +35,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener , IFirebaseCallback{
@@ -246,10 +242,18 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     product = new Product(price2, name, info, date1, date2,bitmap);
                     firebaseController.saveProduct(product,sellId);
 
-                    Intent intent2 = new Intent(this, saleReciver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent2, FLAG_IMMUTABLE);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (86400000), pendingIntent);
+//                    JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+//                    ComponentName componentName = new ComponentName(this,MyJobService.class);
+//                    JobInfo jobInfo = new  JobInfo.Builder(1, componentName).setPeriodic(5000).build();
+//                    jobScheduler.schedule(jobInfo);
+
+                    Intent intent2 = new Intent(this, SaleReciver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent2, PendingIntent.FLAG_IMMUTABLE);
+                    Calendar calendar2 = Calendar.getInstance();
+                    calendar2.set(Calendar.SECOND,5);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar2.getTimeInMillis(),pendingIntent);
+                    Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
@@ -258,10 +262,13 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, society);
                     firebaseController.saveTechProduct(techProduct,sellId);
 
-                    Intent intent2 = new Intent(this, saleReciver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent2, FLAG_IMMUTABLE);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (86400000), pendingIntent);
+                    Intent intent2 = new Intent(this, SaleReciver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent2, PendingIntent.FLAG_IMMUTABLE);
+                    Calendar calendar2 = Calendar.getInstance();
+                    calendar2.set(Calendar.SECOND,5);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar2.getTimeInMillis(),pendingIntent);
+                    Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
