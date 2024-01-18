@@ -1,20 +1,23 @@
 package com.example.selltobuy;
 
-import static android.app.PendingIntent.FLAG_IMMUTABLE;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -53,6 +56,8 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     FirebaseController firebaseController;
     String sellId;
     String name,info,price,society;
+    Product product;
+    TechProduct techProduct;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -226,8 +231,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
             } else if (check.chekBitmap(bitmap)==false) {
                 Toast.makeText(this, "please take any picture of your product", Toast.LENGTH_SHORT).show();
             } else {
-                Product product;
-                TechProduct techProduct;
+
                 price2 = Integer.parseInt(price);
                 Calendar calendar = Calendar.getInstance();
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -241,37 +245,27 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
                     product = new Product(price2, name, info, date1, date2,bitmap);
                     firebaseController.saveProduct(product,sellId);
-
-//                    JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-//                    ComponentName componentName = new ComponentName(this,MyJobService.class);
-//                    JobInfo jobInfo = new  JobInfo.Builder(1, componentName).setPeriodic(5000).build();
-//                    jobScheduler.schedule(jobInfo);
-
-                    Intent intent2 = new Intent(this, SaleReciver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent2, PendingIntent.FLAG_IMMUTABLE);
-                    Calendar calendar2 = Calendar.getInstance();
-                    calendar2.set(Calendar.SECOND,5);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar2.getTimeInMillis(),pendingIntent);
-                    Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
+                    //getAlarmProduct(product);
+
+                    Intent intent3 = new Intent(this, NotificationReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
+
                 }
                 if (text.equals("Tech product")) {
                     techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, society);
                     firebaseController.saveTechProduct(techProduct,sellId);
-
-                    Intent intent2 = new Intent(this, SaleReciver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent2, PendingIntent.FLAG_IMMUTABLE);
-                    Calendar calendar2 = Calendar.getInstance();
-                    calendar2.set(Calendar.SECOND,5);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar2.getTimeInMillis(),pendingIntent);
-                    Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
+                   // getAlarmTechProduct(techProduct);
+
+                    Intent intent3 = new Intent(this, NotificationReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
                 }
 
             }
@@ -292,5 +286,46 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     @Override
     public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
 
+    }
+
+    public void getAlarmProduct(Product product)
+    {
+        //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
+        Intent intent2 = new Intent(this,SaleReceiver.class);
+        String id = product.getPid();
+        intent2.putExtra("productId" , id);
+           // intent2.addFlags(0);
+
+//        if(techProduct!=null)
+//        {
+//            intent2.putExtra("techProductId",techProduct.getPid());
+//        }
+       // sendBroadcast(intent2);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1,intent2, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(5000),pendingIntent);
+        Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
+    }
+
+    public void getAlarmTechProduct(TechProduct product)
+    {
+        //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
+        Intent intent2 = new Intent(this,SaleReceiver.class);
+        intent2.putExtra("techProductId" , product.getPid());
+        // intent2.addFlags(0);
+
+//        if(techProduct!=null)
+//        {
+//            intent2.putExtra("techProductId",techProduct.getPid());
+//        }
+        // sendBroadcast(intent2);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1,intent2, PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(5000),pendingIntent);
+        Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
     }
 }

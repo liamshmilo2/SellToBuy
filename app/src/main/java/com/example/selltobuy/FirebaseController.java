@@ -128,6 +128,15 @@ public class FirebaseController {
         }
     }
 
+    public void removeProduct(String id)
+    {
+        getMYREF("products").child(id).removeValue();
+    }
+
+    public void removeTechProduct(String id)
+    {
+        getMYREF("techProducts").child(id).removeValue();
+    }
 
     //הפעולה המציגה את רשימת המוצרים
     public void retrieveData( IFirebaseCallback firebaseCallback)
@@ -314,4 +323,7 @@ public class FirebaseController {
             }
         });
     }
+
+
+
 }
