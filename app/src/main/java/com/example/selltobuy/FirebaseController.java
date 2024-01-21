@@ -1,5 +1,11 @@
 package com.example.selltobuy;
 
+
+
+import static android.content.Context.ALARM_SERVICE;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -93,6 +99,15 @@ public class FirebaseController {
         product1.setSellId(idSell);
         product1.setBuyId(null);
         data.setValue(product1);
+
+
+        Intent intent2 = new Intent(context,SaleReceiver.class);
+        intent2.putExtra("productId" ,product1.getPid());
+        intent2.putExtra("techProductId" , "");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(5000),pendingIntent);
+        Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
     //הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס

@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +59,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     String name,info,price,society;
     Product product;
     TechProduct techProduct;
+    IFirebaseCallback iFirebaseCallback;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -249,10 +251,10 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     startActivity(intent);
                     //getAlarmProduct(product);
 
-                    Intent intent3 = new Intent(this, NotificationReceiver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
+//                    Intent intent3 = new Intent(this, NotificationReceiver.class);
+//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
+//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
 
                 }
                 if (text.equals("Tech product")) {
@@ -260,12 +262,12 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     firebaseController.saveTechProduct(techProduct,sellId);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
-                   // getAlarmTechProduct(techProduct);
+                    //getAlarmTechProduct(techProduct);
 
-                    Intent intent3 = new Intent(this, NotificationReceiver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
+//                    Intent intent3 = new Intent(this, NotificationReceiver.class);
+//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
+//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
                 }
 
             }
@@ -292,8 +294,10 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     {
         //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
         Intent intent2 = new Intent(this,SaleReceiver.class);
-        String id = product.getPid();
-        intent2.putExtra("productId" , id);
+       // String id = product.getPid();
+        //Log.i("PROD", product.getPid());
+        intent2.putExtra("productId" , product.getPid());
+        intent2.putExtra("techProductId" , "");
            // intent2.addFlags(0);
 
 //        if(techProduct!=null)
@@ -314,6 +318,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
         Intent intent2 = new Intent(this,SaleReceiver.class);
         intent2.putExtra("techProductId" , product.getPid());
+        intent2.putExtra("productId" , "");
         // intent2.addFlags(0);
 
 //        if(techProduct!=null)
