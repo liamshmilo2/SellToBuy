@@ -26,7 +26,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
         Notification notification = new NotificationCompat.Builder(context, "channel").
                 setSmallIcon(R.drawable.img).
-                setContentTitle("reminder").setContentText("remember to check your products").
+                setContentTitle("delete").setContentText("the product sold").
                 setPriority(NotificationCompat.PRIORITY_HIGH).build();
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);

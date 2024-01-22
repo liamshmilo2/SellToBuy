@@ -3,7 +3,6 @@
     <string-array name="types">
         <item>General product</item>
         <item>Tech product</item>
-        <item>Child product</item>
     </string-array>
 
 </resources>
