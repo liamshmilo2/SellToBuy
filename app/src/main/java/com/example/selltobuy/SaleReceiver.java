@@ -39,16 +39,13 @@ public class SaleReceiver extends BroadcastReceiver {
                  firebaseController.removeProduct(id);
 
                  sendNotification(context);
-
-
-//                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent3, PendingIntent.FLAG_IMMUTABLE);
-//                 AlarmManager alarmManager = (AlarmManager) getResultExtras(ALARM_SERVICE);
-//                 alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
              }
              if(!intent.getExtras().getString("techProductId").equals(""))
              {
                  id=intent.getExtras().getString("techProductId");
-                 firebaseController.removeProduct(id);
+                 firebaseController.removeTechProduct(id);
+
+                 sendNotification(context);
              }
          }
     }
