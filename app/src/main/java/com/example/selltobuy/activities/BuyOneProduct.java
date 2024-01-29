@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,11 +11,17 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.IFirebaseCallback;
+import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.R;
+import com.example.selltobuy.classes.TechProduct;
+import com.example.selltobuy.classes.User;
 
 import java.util.ArrayList;
 
-public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener , IFirebaseCallback{
+public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener , IFirebaseCallback {
     TextView nameProduct,finalDate,currentPrice,infoText,society;
     ImageView productImage;
     Bitmap bitmap;
@@ -83,7 +89,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         if(view==backBtn)
         {
-            Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
+            Intent intent = new Intent(BuyOneProduct.this, Buyproduct.class);
             startActivity(intent);
         }
         if(view==price)

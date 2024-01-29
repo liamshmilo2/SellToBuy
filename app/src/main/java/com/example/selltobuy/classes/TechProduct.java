@@ -1,8 +1,8 @@
-package com.example.selltobuy;
+package com.example.selltobuy.classes;
 
 import android.graphics.Bitmap;
 
-public class TechProduct extends Product{
+public class TechProduct extends Product {
     private String society; //חברה של המוצר
 
     public TechProduct() {

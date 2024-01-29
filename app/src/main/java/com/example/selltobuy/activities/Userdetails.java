@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.IFirebaseCallback;
+import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.R;
+import com.example.selltobuy.classes.TechProduct;
+import com.example.selltobuy.classes.User;
 
 import java.util.ArrayList;
 

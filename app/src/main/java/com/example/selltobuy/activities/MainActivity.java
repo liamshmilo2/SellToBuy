@@ -1,17 +1,20 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.selltobuy.classes.Check;
+import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.R;
+import com.example.selltobuy.classes.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnSingin , btnLogin;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(firebaseController.currentUser())
         {
-            Intent intent = new Intent(MainActivity.this,Buyproduct.class);
+            Intent intent = new Intent(MainActivity.this, Buyproduct.class);
             startActivity(intent);
         }
     }

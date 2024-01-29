@@ -10,14 +10,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.selltobuy.receiver.SaleReceiver;
+import com.example.selltobuy.activities.BuyOneProduct;
+import com.example.selltobuy.activities.Buyproduct;
+import com.example.selltobuy.activities.MainActivity;
+import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.classes.TechProduct;
+import com.example.selltobuy.classes.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -101,7 +105,7 @@ public class FirebaseController {
         data.setValue(product1);
 
 
-        Intent intent2 = new Intent(context,SaleReceiver.class);
+        Intent intent2 = new Intent(context, SaleReceiver.class);
 
         intent2.putExtra("productId" ,product1.getPid());
         intent2.putExtra("techProductId" , "");
@@ -112,7 +116,7 @@ public class FirebaseController {
     }
 
     //הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
-    public void saveTechProduct(TechProduct product,String idSell) {
+    public void saveTechProduct(TechProduct product, String idSell) {
         DatabaseReference data = getMYREF("techProducts").push();
         uploadImage(product.getImage(),data.getKey());
         TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(),product.getSociety());
@@ -134,12 +138,46 @@ public class FirebaseController {
     //הפעולה מעדכנת את מחירו של מוצר בפיירבייס
     public void updateProduct(String id, int price,String idBuy)
     {
-        String sellId = getMYREF("products").child(id).child("sellId").toString();
-        if(sellId!=idBuy)
-        {
-            getMYREF("products").child(id).child("price").setValue(price);
-            getMYREF("products").child(id).child("buyId").setValue(idBuy);
-        }
+        getMYREF("products").child(id).child("sellId").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String sellId = snapshot.getValue(String.class);
+                getMYREF("users").child(idBuy).child("coin").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int coins = snapshot.getValue(Integer.class);
+                        if(sellId!=idBuy && coins>=price)
+                        {
+                            getMYREF("products").child(id).child("price").setValue(price);
+                            getMYREF("products").child(id).child("buyId").setValue(idBuy);
+                        }
+                        else
+                        {
+                            try {
+                                Toast.makeText(BuyOneProduct.class.newInstance(), "you can't buy this product", Toast.LENGTH_SHORT).show();
+                            } catch (IllegalAccessException e) {
+                                throw new RuntimeException(e);
+                            } catch (InstantiationException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     //הפעולה מעדכנת את מחירו של המוצר הטכנולוגי
@@ -250,7 +288,7 @@ public class FirebaseController {
                         if (task.isSuccessful()) {
                             user.setId(task.getResult().getUser().getUid());
                             getMYREF("users").child(task.getResult().getUser().getUid()).setValue(user);
-                            context.startActivity(new Intent(context,Buyproduct.class));
+                            context.startActivity(new Intent(context, Buyproduct.class));
                         } else {
 
                             Toast.makeText(context, "Authentication failed."+task.getException().getMessage(),
@@ -282,7 +320,7 @@ public class FirebaseController {
     public void logOut()
     {
         getAuth().signOut();
-        context.startActivity(new Intent(context,MainActivity.class));
+        context.startActivity(new Intent(context, MainActivity.class));
     }
 
     //פעולה המנתקת את המשתמש המחובר כדי לאפשר להחליף למשתמש אחר

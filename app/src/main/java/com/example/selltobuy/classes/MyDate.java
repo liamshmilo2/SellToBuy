@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.classes;
 
 import java.io.Serializable;
 import java.util.Calendar;

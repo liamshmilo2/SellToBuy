@@ -1,28 +1,21 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +27,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.selltobuy.classes.Check;
+import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.IFirebaseCallback;
+import com.example.selltobuy.classes.MyDate;
+import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.R;
+import com.example.selltobuy.classes.TechProduct;
+import com.example.selltobuy.classes.User;
+import com.example.selltobuy.receiver.SaleReceiver;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener , IFirebaseCallback{
+public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener , IFirebaseCallback {
 
     ImageView imageView, imageFromGallery;
 
@@ -293,7 +295,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
     public void getAlarmProduct(Product product)
     {
         //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
-        Intent intent2 = new Intent(this,SaleReceiver.class);
+        Intent intent2 = new Intent(this, SaleReceiver.class);
        // String id = product.getPid();
         //Log.i("PROD", product.getPid());
         intent2.putExtra("productId" , product.getPid());

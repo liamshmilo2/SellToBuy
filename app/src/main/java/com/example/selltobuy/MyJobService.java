@@ -2,7 +2,6 @@ package com.example.selltobuy;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.media.MediaPlayer;
 import android.widget.Toast;
 
 public class MyJobService extends JobService {

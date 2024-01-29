@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,16 +14,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
+import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.IFirebaseCallback;
+import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.ProductAdapter;
+import com.example.selltobuy.R;
+import com.example.selltobuy.classes.TechProduct;
+import com.example.selltobuy.classes.User;
+import com.example.selltobuy.receiver.BatteryReciver;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Buyproduct extends AppCompatActivity implements IFirebaseCallback , AdapterView.OnItemSelectedListener, Serializable {
+public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, AdapterView.OnItemSelectedListener, Serializable {
     private ArrayList<Product> products;
     private View.OnClickListener onItemClickListener;
     private FirebaseController firebaseController;

@@ -19,11 +19,11 @@
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
         <receiver
-            android:name=".NotificationReceiver"
+            android:name=".receiver.NotificationReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
         <receiver
-            android:name=".SaleReceiver"
+            android:name=".receiver.SaleReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -38,22 +38,22 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
-            android:name=".BuyOneProduct"
+            android:name=".activities.BuyOneProduct"
             android:exported="false" />
         <activity
-            android:name=".Sell"
+            android:name=".activities.Sell"
             android:exported="false" />
         <activity
-            android:name=".Buyproduct"
+            android:name=".activities.Buyproduct"
             android:exported="false" />
         <activity
-            android:name=".Userdetails"
+            android:name=".activities.Userdetails"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".activities.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

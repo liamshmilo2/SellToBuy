@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.selltobuy.classes.Check;
+import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.R;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
