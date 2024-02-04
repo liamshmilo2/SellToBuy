@@ -25,12 +25,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_product"
-        android:layout_width="408dp"
-        android:layout_height="618dp"
+        android:layout_width="397dp"
+        android:layout_height="607dp"
         android:layout_marginTop="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product"
         app:layout_constraintVertical_bias="1.0" />
@@ -40,11 +40,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="334dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintHorizontal_bias="0.311"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product" />
+
+    <TextView
+        android:id="@+id/haveId"
+        android:layout_width="84dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="157dp"
+        android:text="You have"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product" />
+
+    <TextView
+        android:id="@+id/coinText"
+        android:layout_width="55dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="233dp"
+        android:text="coin"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/haveId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/haveId"
+        app:layout_constraintTop_toTopOf="@+id/haveId"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/coinImg"
+        android:layout_width="34dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="206dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coinText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/coinText"
+        app:layout_constraintTop_toTopOf="@+id/coinText"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/coin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

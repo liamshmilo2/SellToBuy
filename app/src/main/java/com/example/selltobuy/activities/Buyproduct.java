@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.selltobuy.FirebaseController;
 import com.example.selltobuy.IFirebaseCallback;
@@ -37,6 +38,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
     Spinner type;
     String text;
     Bitmap bitmap;
+    TextView coinText;
 
 
     private BatteryReciver batteryReciver;
@@ -58,8 +60,9 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
         type.setAdapter(adapter);
         type.setOnItemSelectedListener(this);
         text="General product";
+        coinText=findViewById(R.id.coinText);
         firebaseController = new FirebaseController(this);
-
+        firebaseController.read(this);
 
 
         products = new ArrayList<>();
@@ -68,7 +71,11 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+
         batteryReciver=new BatteryReciver();
+
+
+
     }
 
     @Override
@@ -119,7 +126,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
 
     @Override
     public void onCallbackUser(User user) {
-
+        coinText.setText("" + user.getCoin());
     }
 
 
