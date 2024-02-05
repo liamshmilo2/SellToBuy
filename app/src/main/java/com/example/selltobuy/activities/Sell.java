@@ -311,7 +311,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1,intent2, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(5000),pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(20000),pendingIntent);
         Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
     }
 

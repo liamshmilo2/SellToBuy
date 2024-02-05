@@ -193,7 +193,34 @@ public class FirebaseController {
 
     public void removeProduct(String id)
     {
-        getMYREF("products").child(id).removeValue();
+
+       getMYREF("products").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String sellId = snapshot.getValue(String.class);
+                getMYREF("products").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Product product = snapshot.getValue(Product.class);
+                        getMYREF("users").child(sellId).child("sellList").push().setValue(product);
+                        getMYREF("products").child(id).removeValue();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     public void removeTechProduct(String id)
