@@ -101,7 +101,7 @@ public class FirebaseController {
         Product product1 = new Product(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate());
         product1.setPid(data.getKey());
         product1.setSellId(idSell);
-        product1.setBuyId(null);
+        product1.setBuyId("null");
         data.setValue(product1);
 
 
@@ -111,7 +111,7 @@ public class FirebaseController {
         intent2.putExtra("techProductId" , "");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(5000),pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
         Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
@@ -122,7 +122,7 @@ public class FirebaseController {
         TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(),product.getSociety());
         product1.setPid(data.getKey());
         product1.setSellId(idSell);
-        product1.setBuyId(null);
+        product1.setBuyId("null");
         data.setValue(product1);
 
         Intent intent2 = new Intent(context,SaleReceiver.class);
@@ -131,7 +131,7 @@ public class FirebaseController {
         intent2.putExtra("techProductId" , product1.getPid());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(5000),pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
         Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
@@ -198,12 +198,35 @@ public class FirebaseController {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String sellId = snapshot.getValue(String.class);
-                getMYREF("products").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                getMYREF("products").child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Product product = snapshot.getValue(Product.class);
-                        getMYREF("users").child(sellId).child("sellList").push().setValue(product);
-                        getMYREF("products").child(id).removeValue();
+                        String buyId = snapshot.getValue(String.class);
+
+                        getMYREF("products").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Product product = snapshot.getValue(Product.class);
+                                if(buyId.equals("null"))
+                                {
+                                    getMYREF("products").child(id).removeValue();
+                                }
+                                else
+                                {
+                                    getMYREF("users").child(sellId).child("sellList").child(product.getPid()).setValue(product);
+                                    getMYREF("users").child(buyId).child("buyList").child(product.getPid()).setValue(product);
+                                    getMYREF("products").child(id).removeValue();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -211,6 +234,7 @@ public class FirebaseController {
 
                     }
                 });
+
 
             }
 
@@ -225,7 +249,55 @@ public class FirebaseController {
 
     public void removeTechProduct(String id)
     {
-        getMYREF("techProducts").child(id).removeValue();
+        getMYREF("techProducts").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String sellId = snapshot.getValue(String.class);
+
+                getMYREF("techProducts").child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String buyId = snapshot.getValue(String.class);
+
+                        getMYREF("techProducts").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Product product = snapshot.getValue(Product.class);
+                                if(buyId.equals("null"))
+                                {
+                                    getMYREF("techProducts").child(id).removeValue();
+                                }
+                                else
+                                {
+                                    getMYREF("users").child(sellId).child("sellList").push().setValue(product);
+                                    getMYREF("users").child(buyId).child("buyList").push().setValue(product);
+                                    getMYREF("techProducts").child(id).removeValue();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //הפעולה המציגה את רשימת המוצרים

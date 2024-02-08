@@ -1,8 +1,9 @@
 package com.example.selltobuy.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private  String name; //שם
     private String userName; //שם משתמש
     private  String id; //מזהה אישי
@@ -33,6 +34,29 @@ public class User {
         this.email = email;
         this.phone = phone;
     }
+
+    public User(String name, String userName, String id, int coin, String email, String phone, List<Product> buyList, List<Product> sellList) {
+        this.name = name;
+        this.userName = userName;
+        this.id = id;
+        this.coin = coin;
+        this.email = email;
+        this.phone = phone;
+        this.buyList = buyList;
+        this.sellList = sellList;
+    }
+
+    public User(String name, String userName, String id, int coin, String email, String phone, List<Product> buyList) {
+        this.name = name;
+        this.userName = userName;
+        this.id = id;
+        this.coin = coin;
+        this.email = email;
+        this.phone = phone;
+        this.buyList = buyList;
+    }
+
+
 
     public String getPhone() {
         return phone;

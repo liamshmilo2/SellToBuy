@@ -68,14 +68,14 @@
         android:layout_width="99dp"
         android:layout_height="59dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="264dp"
         android:layout_marginEnd="141dp"
         android:backgroundTint="#03A9F4"
         android:text="+"
         android:textColor="@color/black"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintHorizontal_bias="0.941"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentPrice" />
 
@@ -84,13 +84,13 @@
         android:layout_width="271dp"
         android:layout_height="76dp"
         android:layout_marginStart="39dp"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="156dp"
         android:layout_marginEnd="315dp"
         android:text="Want this product? raise the price!"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentPrice" />
 
