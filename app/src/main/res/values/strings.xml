@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SellToBuy</string>
+    <string name="Product_name">Product name: </string>
+    <string name="log_in">Log in</string>
     <string-array name="types">
         <item>General product</item>
         <item>Tech product</item>

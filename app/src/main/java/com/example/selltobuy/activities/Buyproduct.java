@@ -39,15 +39,13 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
     String text;
     Bitmap bitmap;
     TextView coinText;
-
-
     private BatteryReciver batteryReciver;
+
     protected void onStart ()
     {
         super.onStart();
         registerReceiver(batteryReciver,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
-
 
 
     @Override

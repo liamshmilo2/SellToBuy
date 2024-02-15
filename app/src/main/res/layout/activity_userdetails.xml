@@ -54,8 +54,8 @@
 
     <TextView
         android:id="@+id/emaildetails"
-        android:layout_width="397dp"
-        android:layout_height="64dp"
+        android:layout_width="365dp"
+        android:layout_height="59dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="332dp"
         android:text="Email:"
@@ -85,12 +85,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="142dp"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="181dp"
+        android:backgroundTint="#03A9F4"
         android:text="update details"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coinsDetails" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_product2"
+        android:layout_width="391dp"
+        android:layout_height="377dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coinsDetails"
-        android:backgroundTint="#03A9F4"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toBottomOf="@+id/updateBtn"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
