@@ -33,12 +33,12 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
     private ArrayList<Product> products;
     private View.OnClickListener onItemClickListener;
     private FirebaseController firebaseController;
-    RecyclerView recyclerView;
-    ProductAdapter productAdapter;
-    Spinner type;
-    String text;
-    Bitmap bitmap;
-    TextView coinText;
+    private RecyclerView recyclerView;
+    private ProductAdapter productAdapter;
+    private Spinner type;
+    private String text;
+    private Bitmap bitmap;
+    private TextView coinText;
     private BatteryReciver batteryReciver;
 
     protected void onStart ()

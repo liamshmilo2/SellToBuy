@@ -491,5 +491,44 @@ public class FirebaseController {
     }
 
 
+    public void myProducts( IFirebaseCallback firebaseCallback , FirebaseUser firebaseUser)
+    {
+
+        Query query = getMYREF("sold").orderByChild("stratDate");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList productList = new ArrayList<Product>();
+                for(DataSnapshot data : dataSnapshot.getChildren())
+                {
+                    final Product p = data.getValue(Product.class);
+                    p.setPid(data.getKey());
+                    final String key = p.getPid();
+                    if(p.getSellId().equals(firebaseUser.getUid()))
+                    {
+                        final long ONE_MEGABYTE = 1024*1024;
+                        StorageReference mRef = getSTORAGEREFERENCE().child(  key + ".jpg");
+                        mRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                                Product product = new Product(p.getPrice(),p.getName(),p.getInfo(),p.getStratDate(),p.getFinalDate(),bitmap);
+                                product.setPid(key);
+                                product.setSellId(p.getSellId());
+                                product.setBuyId(p.getBuyId());
+                                productList.add(product);
+                                firebaseCallback.onCallbackList(productList);
+                            }
+                        });
+                    }
+                    }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

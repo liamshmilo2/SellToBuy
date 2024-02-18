@@ -1,29 +1,47 @@
 package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.selltobuy.FirebaseController;
 import com.example.selltobuy.IFirebaseCallback;
+import com.example.selltobuy.ProductAdapter;
 import com.example.selltobuy.classes.Product;
 import com.example.selltobuy.R;
 import com.example.selltobuy.classes.TechProduct;
 import com.example.selltobuy.classes.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Userdetails extends AppCompatActivity implements IFirebaseCallback, View.OnClickListener {
+public class Userdetails extends AppCompatActivity implements IFirebaseCallback, View.OnClickListener, AdapterView.OnItemSelectedListener , Serializable {
 
     TextView nameDetails,usernamedetails,emaildetails,coinsDetails;
     FirebaseController firebaseController;
+
+    private View.OnClickListener onItemClickListener;
+    private ArrayList<Product> products;
+    private RecyclerView recyclerviewProduct2;
+    private ProductAdapter productAdapter;
+
+    private Bitmap bitmap;
+
 
     Button updateBtn;
 
@@ -36,10 +54,19 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         emaildetails=findViewById(R.id.emaildetails);
         coinsDetails=findViewById(R.id.coinsDetails);
         firebaseController=new FirebaseController(this);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+        firebaseController.myProducts(this,firebaseUser);
         firebaseController.read(this);
 
         updateBtn=findViewById(R.id.updateBtn);
         updateBtn.setOnClickListener(this);
+
+        products = new ArrayList<>();
+
+        recyclerviewProduct2 = findViewById(R.id.recyclerview_product2);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerviewProduct2.setLayoutManager(layoutManager);
     }
 
     //הפולה יוצרת את ה menu
@@ -76,9 +103,10 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
     }
 
     @Override
-    public void onCallbackList(ArrayList<Product> products) {
-
-
+    public void onCallbackList(ArrayList<Product> products1) {
+        products= products1;
+        productAdapter=new ProductAdapter(products);
+        recyclerviewProduct2.setAdapter(productAdapter);
     }
 
     @Override
@@ -101,5 +129,15 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
             });
             dialog.show();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
