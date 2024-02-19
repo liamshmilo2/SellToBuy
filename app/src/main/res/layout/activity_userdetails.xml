@@ -12,14 +12,15 @@
         android:layout_width="276dp"
         android:layout_height="65dp"
         android:layout_marginStart="78dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="57dp"
+        android:fontFamily="@font/alata"
         android:gravity="center"
         android:text="@string/user_details"
         android:textColor="@color/black"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,8 +98,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_product2"
-        android:layout_width="391dp"
-        android:layout_height="377dp"
+        android:layout_width="400dp"
+        android:layout_height="298dp"
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

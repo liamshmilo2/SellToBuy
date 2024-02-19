@@ -10,22 +10,23 @@
 
     <TextView
         android:id="@+id/textHome"
-        android:layout_width="333dp"
-        android:layout_height="71dp"
+        android:layout_width="327dp"
+        android:layout_height="76dp"
         android:layout_marginStart="39dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="39dp"
         android:layout_marginBottom="300dp"
+        android:fontFamily="casual"
         android:gravity="center"
         android:text="@string/sell_to_buy"
+        android:textColor="@color/black"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.493"
-        android:textColor="@color/black"/>
+        app:layout_constraintVertical_bias="0.493" />
 
     <Button
         android:id="@+id/btnSingin"
