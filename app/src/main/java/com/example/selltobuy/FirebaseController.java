@@ -111,7 +111,7 @@ public class FirebaseController {
         intent2.putExtra("techProductId" , "");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(3600000),pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
         Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
@@ -131,7 +131,7 @@ public class FirebaseController {
         intent2.putExtra("techProductId" , product1.getPid());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(3600000),pendingIntent);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
         Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
