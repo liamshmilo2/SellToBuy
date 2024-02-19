@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "538086010121",
+    "project_id": "selltobuy-2c835",
+    "storage_bucket": "selltobuy-2c835.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538086010121:android:0d80417e864d250dfd37d8",
+        "android_client_info": {
+          "package_name": "com.example.selltobuy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxcAnIqVbULXnOKz76SeaY4PN86M1We_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
