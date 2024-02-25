@@ -131,18 +131,6 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
         firebaseController.read(this);
 
-
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ImagePicker.with(this)
-//                        .crop()	    			//Crop image(Optional), Check Customization for more option
-//                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-//                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
-//                        .start()
-//
-//            }
-//        });
     }
 
     private static final int PICK_IMAGE_REQUEST = 234;
@@ -150,7 +138,6 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        //startActivityForResult(Intent.createChooser(intent, "Select an File"), PICK_IMAGE_REQUEST);
         getGalleryActivityResultLauncher.launch(intent);
 
     }
@@ -251,12 +238,6 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     firebaseController.saveProduct(product,sellId);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
-                    //getAlarmProduct(product);
-
-//                    Intent intent3 = new Intent(this, NotificationReceiver.class);
-//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
-//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
 
                 }
                 if (text.equals("Tech product")) {
@@ -264,12 +245,6 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                     firebaseController.saveTechProduct(techProduct,sellId);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
-                    //getAlarmTechProduct(techProduct);
-
-//                    Intent intent3 = new Intent(this, NotificationReceiver.class);
-//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent3, PendingIntent.FLAG_IMMUTABLE);
-//                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//                    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3000), pendingIntent);
                 }
 
             }
@@ -294,19 +269,9 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     public void getAlarmProduct(Product product)
     {
-        //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
         Intent intent2 = new Intent(this, SaleReceiver.class);
-       // String id = product.getPid();
-        //Log.i("PROD", product.getPid());
         intent2.putExtra("productId" , product.getPid());
         intent2.putExtra("techProductId" , "");
-           // intent2.addFlags(0);
-
-//        if(techProduct!=null)
-//        {
-//            intent2.putExtra("techProductId",techProduct.getPid());
-//        }
-       // sendBroadcast(intent2);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1,intent2, PendingIntent.FLAG_IMMUTABLE);
 
@@ -317,17 +282,9 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     public void getAlarmTechProduct(TechProduct product)
     {
-        //Intent intent2 = new Intent("com.example.selltobuy.ACTION_NAME");
         Intent intent2 = new Intent(this,SaleReceiver.class);
         intent2.putExtra("techProductId" , product.getPid());
         intent2.putExtra("productId" , "");
-        // intent2.addFlags(0);
-
-//        if(techProduct!=null)
-//        {
-//            intent2.putExtra("techProductId",techProduct.getPid());
-//        }
-        // sendBroadcast(intent2);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1,intent2, PendingIntent.FLAG_IMMUTABLE);
 
