@@ -13,11 +13,19 @@ import com.example.selltobuy.classes.Product;
 
 import java.util.ArrayList;
 
+/**
+ * The type Product adapter.
+ */
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private ArrayList<Product> products;
 
     private View.OnClickListener mOnItemClickListener;
 
+    /**
+     * Instantiates a new Product adapter.
+     *
+     * @param productsArrayList the products array list
+     */
     public ProductAdapter(ArrayList<Product> productsArrayList) {
         this.products = productsArrayList;
     }
@@ -30,6 +38,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return new ProductViewHolder(productView);
     }
 
+    /**
+     * Sets on item click listener.
+     *
+     * @param itemClickListener the item click listener
+     */
     public void setmOnItemClickListener (View.OnClickListener itemClickListener)
     {
         mOnItemClickListener = itemClickListener;
@@ -53,14 +66,37 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return products.size();
     }
 
+    /**
+     * The type Product view holder.
+     */
     public class ProductViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * The Name text view.
+         */
         public TextView nameTextView;
+        /**
+         * The Price text view.
+         */
         public  TextView priceTextView;
+        /**
+         * The Start text view.
+         */
         public  TextView startTextView;
+        /**
+         * The Final text view.
+         */
         public  TextView finalTextView;
+        /**
+         * The Image view.
+         */
         public ImageView imageView;
 
+        /**
+         * Instantiates a new Product view holder.
+         *
+         * @param itemView the item view
+         */
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.textview_name);

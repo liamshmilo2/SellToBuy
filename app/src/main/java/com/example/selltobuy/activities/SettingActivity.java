@@ -16,10 +16,29 @@ import com.example.selltobuy.classes.Check;
 import com.example.selltobuy.FirebaseController;
 import com.example.selltobuy.R;
 
+/**
+ * The type Setting activity.
+ */
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button logout,change;
+    /**
+     * The Logout.
+     */
+    Button logout,
+
+    /**
+     * The Change.
+     */
+    change;
+
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;
+
+    /**
+     * The Check class.
+     */
     Check check;
 
     @Override

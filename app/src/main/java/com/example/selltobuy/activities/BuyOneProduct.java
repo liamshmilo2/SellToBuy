@@ -21,16 +21,69 @@ import com.example.selltobuy.classes.User;
 
 import java.util.ArrayList;
 
+/**
+ * The type Buy one product.
+ */
 public class BuyOneProduct extends AppCompatActivity implements View.OnClickListener , IFirebaseCallback {
-    TextView nameProduct,finalDate,currentPrice,infoText,society;
+    /**
+     * The Name product.
+     */
+    TextView nameProduct,
+    /**
+     * The Final date.
+     */
+    finalDate,
+    /**
+     * The Current price.
+     */
+    currentPrice,
+    /**
+     * The Info text.
+     */
+    infoText,
+    /**
+     * The Society.
+     */
+    society;
+    /**
+     * The Product image.
+     */
     ImageView productImage;
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
+    /**
+     * The Product.
+     */
     Product product=null;
+    /**
+     * The Tech product.
+     */
     TechProduct techProduct=null;
+    /**
+     * The Back btn.
+     */
     ImageButton backBtn;
-    Button price,btnSave;
+    /**
+     * The Price.
+     */
+    Button price,
+    /**
+     * The Btn save.
+     */
+    btnSave;
+    /**
+     * The Edit price.
+     */
     int editPrice;
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;
+    /**
+     * The Buy id.
+     */
     String buyId;
 
     @Override

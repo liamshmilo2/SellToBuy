@@ -29,18 +29,50 @@ import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * The type Buyproduct.
+ */
 public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, AdapterView.OnItemSelectedListener, Serializable {
+    /**
+     * רשימת מוצרים
+     */
     private ArrayList<Product> products;
+
+    /**
+     * The OnClickListener.
+     */
     private View.OnClickListener onItemClickListener;
+
+    /**
+     * The Firebase controller.
+     */
     private FirebaseController firebaseController;
+
+    /**
+     * The Recycler View.
+     */
     private RecyclerView recyclerView;
+
+    /**
+     * The Product Adapter.
+     */
     private ProductAdapter productAdapter;
+
+    /**
+     * The Products type.
+     */
     private Spinner type;
     private String text;
     private Bitmap bitmap;
+
+    /**
+     * The text coin.
+     */
     private TextView coinText;
     private BatteryReciver batteryReciver;
 
+
+    //הפעולה מתחילה את ה  BatteryReciver
     protected void onStart ()
     {
         super.onStart();
@@ -76,6 +108,7 @@ public class Buyproduct extends AppCompatActivity implements IFirebaseCallback, 
 
     }
 
+    //הפעולה בודקת איזה סוג של רשימה יש להציג ומציגה אותה בהתאם
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         //((TextView)adapterView.getChildAt(0)).setTextColor(Color.BLACK);

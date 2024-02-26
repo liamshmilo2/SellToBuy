@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import com.example.selltobuy.activities.MainActivity;
 
+/**
+ * The type Opening activity.
+ */
 public class OpeningActivity extends AppCompatActivity {
 
     @Override

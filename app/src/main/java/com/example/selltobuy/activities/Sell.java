@@ -43,24 +43,96 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
+/**
+ * The type Sell.
+ */
 public class Sell extends AppCompatActivity implements View.OnClickListener , AdapterView.OnItemSelectedListener , IFirebaseCallback {
 
-    ImageView imageView, imageFromGallery;
+    /**
+     * The Image view.
+     */
+    ImageView imageView,
+    /**
+     * The Image from gallery.
+     */
+    imageFromGallery;
 
+    /**
+     * The Button.
+     */
     FloatingActionButton button;
+    /**
+     * The Btn sell.
+     */
     Button btnSell;
-    EditText editTextName,editTextPrice,editTextInfo;
+    /**
+     * The Edit text name.
+     */
+    EditText editTextName,
+    /**
+     * The Edit text price.
+     */
+    editTextPrice,
+    /**
+     * The Edit text info.
+     */
+    editTextInfo;
+    /**
+     * The Check.
+     */
     Check check;
+    /**
+     * The Text.
+     */
     String text;
+    /**
+     * The Bitmap.
+     */
     Bitmap bitmap;
+    /**
+     * The Get pic activity result launcher.
+     */
     ActivityResultLauncher<Intent>getPicActivityResultLauncher;
 
+    /**
+     * The Get gallery activity result launcher.
+     */
     ActivityResultLauncher<Intent>getGalleryActivityResultLauncher;
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;
+    /**
+     * The Sell id.
+     */
     String sellId;
-    String name,info,price,society;
+    /**
+     * The Name.
+     */
+    String name,
+    /**
+     * The Info.
+     */
+    info,
+    /**
+     * The Price.
+     */
+    price,
+    /**
+     * The Society.
+     */
+    society;
+    /**
+     * The Product.
+     */
     Product product;
+    /**
+     * The Tech product.
+     */
     TechProduct techProduct;
+    /**
+     * The Firebase callback.
+     */
     IFirebaseCallback iFirebaseCallback;
 
     @SuppressLint("MissingInflatedId")
@@ -252,21 +324,29 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
     }
 
+    //פעולה הקוראת את פרטי המשתמש הנוכחי
     @Override
     public void onCallbackUser(User user) {
         sellId=user.getId();
     }
 
+    //הפעולה קוראת את רשימת המוצרים
     @Override
     public void onCallbackList(ArrayList<Product> products) {
 
     }
 
+    //הפעולה קוראת את רשימת המוצרים הטכנולוגיים
     @Override
     public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
 
     }
 
+    /**
+     * Gets alarm product.
+     *
+     * @param product the product
+     */
     public void getAlarmProduct(Product product)
     {
         Intent intent2 = new Intent(this, SaleReceiver.class);
@@ -280,6 +360,11 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
         Toast.makeText(this, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Gets alarm tech product.
+     *
+     * @param product the product
+     */
     public void getAlarmTechProduct(TechProduct product)
     {
         Intent intent2 = new Intent(this,SaleReceiver.class);

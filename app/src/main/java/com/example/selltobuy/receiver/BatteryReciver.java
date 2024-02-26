@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * The type Battery reciver.
+ */
 public class BatteryReciver extends BroadcastReceiver{
 
     @Override

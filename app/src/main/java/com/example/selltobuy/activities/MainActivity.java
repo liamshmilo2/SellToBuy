@@ -16,10 +16,33 @@ import com.example.selltobuy.FirebaseController;
 import com.example.selltobuy.R;
 import com.example.selltobuy.classes.User;
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnSingin , btnLogin;
+    /**
+     * The Btn singin.
+     */
+    Button btnSingin ,
+
+    /**
+     * The Btn login.
+     */
+    btnLogin;
+
+    /**
+     * The Text home.
+     */
     TextView textHome;
+
+    /**
+     * The Check class.
+     */
     Check check;
+
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;
 
 

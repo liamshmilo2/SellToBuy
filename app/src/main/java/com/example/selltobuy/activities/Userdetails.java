@@ -25,24 +25,58 @@ import com.example.selltobuy.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileDescriptor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * The type Userdetails.
+ */
 public class Userdetails extends AppCompatActivity implements IFirebaseCallback, View.OnClickListener, AdapterView.OnItemSelectedListener , Serializable {
 
-    TextView nameDetails,usernamedetails,emaildetails,coinsDetails;
+    /**
+     * The Name details.
+     */
+    TextView nameDetails,
+    /**
+     * The User name details.
+     */
+    usernameDetails,
+    /**
+     * The Email details.
+     */
+    emailDetails,
+    /**
+     * The Coins details.
+     */
+    coinsDetails;
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;
 
     private View.OnClickListener onItemClickListener;
+
+    /**
+     * רשימת מוצרים שהמשתמש מכר
+     */
     private ArrayList<Product> products;
+
+    /**
+     * the Recycler View of sold products
+     */
     private RecyclerView recyclerviewProduct2;
+
+    /**
+     * The Product Adapter
+     */
     private ProductAdapter productAdapter;
 
     private Bitmap bitmap;
 
 
+    /**
+     * The Update btn.
+     */
     Button updateBtn;
 
     @Override
@@ -50,8 +84,8 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdetails);
         nameDetails=findViewById(R.id.nameDetails);
-        usernamedetails=findViewById(R.id.usernamedetails);
-        emaildetails=findViewById(R.id.emaildetails);
+        usernameDetails =findViewById(R.id.usernamedetails);
+        emailDetails =findViewById(R.id.emaildetails);
         coinsDetails=findViewById(R.id.coinsDetails);
         firebaseController=new FirebaseController(this);
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -94,14 +128,18 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         return true;
     }
 
+
+    //פעולה הקוראת את פרטי המשתמש הנוכחי
     @Override
     public void onCallbackUser(User user) {
         nameDetails.setText("Name: " + user.getName());
-        usernamedetails.setText("User name: " + user.getUserName());
-        emaildetails.setText("Email: " + user.getEmail());
+        usernameDetails.setText("User name: " + user.getUserName());
+        emailDetails.setText("Email: " + user.getEmail());
         coinsDetails.setText("Coin number: " + user.getCoin());
     }
 
+
+    //הפעולה קוראת את רשימת המוצרים
     @Override
     public void onCallbackList(ArrayList<Product> products1) {
         products= products1;
@@ -109,6 +147,7 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         recyclerviewProduct2.setAdapter(productAdapter);
     }
 
+    //הפעולה קוראת את רשימת המוצרים הטכנולוגיים
     @Override
     public void onCallbackTechList(ArrayList<TechProduct> techProducts) {
 

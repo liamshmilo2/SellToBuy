@@ -42,6 +42,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
+/**
+ * The type Firebase controller.
+ */
 public class FirebaseController {
 
     private static FirebaseAuth MAUTH;
@@ -52,12 +55,20 @@ public class FirebaseController {
     private static FirebaseStorage STORAGE;
     private static StorageReference STORAGEREFERENCE;
 
+    /**
+     * Instantiates a new Firebase controller.
+     *
+     * @param context the context
+     */
     public FirebaseController(Context context) {
         this.context = context;
     }
 
 
-    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת FirebaseAuth נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+    /**
+     * פונקצייה זו מבטיחה שמופע יחיד של מחלקת FirebaseAuth נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+     */
+
     public static FirebaseAuth getAuth()
     {
         if(MAUTH == null)
@@ -66,7 +77,9 @@ public class FirebaseController {
     }
 
 
-    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת FirebaseDatabase נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+    /**
+     *פונקצייה זו מבטיחה שמופע יחיד של מחלקת FirebaseDatabase נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+     */
      public static FirebaseDatabase getDATABASE()
      {
         if(DATABASE==null)
@@ -77,14 +90,18 @@ public class FirebaseController {
      }
 
 
-     //פונקצייה זו מבטיחה שמופע יחיד של מחלקת DatabaseReference נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע
+    /**
+     * פונקצייה זו מבטיחה שמופע יחיד של מחלקת DatabaseReference נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע
+     */
      public static DatabaseReference getMYREF(String key)
      {
          MYREF = getDATABASE().getReference(key);
          return MYREF;
      }
 
-     //הפעולה בודקת אם קיים משתמש מחובר ומחזירה בהתאם
+    /**
+     * הפעולה בודקת אם קיים משתמש מחובר ומחזירה בהתאם
+     */
     public boolean currentUser()
     {
         if(getAuth().getCurrentUser()==null)
@@ -93,8 +110,9 @@ public class FirebaseController {
     }
 
 
-
-    //הפעולה שומרת עצם מהמחלקה Product בפיירבייס
+    /**
+     * הפעולה שומרת עצם מהמחלקה Product בפיירבייס
+     */
     public void saveProduct(Product product , String idSell) {
         DatabaseReference data = getMYREF("products").push();
         uploadImage(product.getImage(),data.getKey());
@@ -115,7 +133,9 @@ public class FirebaseController {
         Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
-    //הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
+    /**
+     * הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
+     */
     public void saveTechProduct(TechProduct product, String idSell) {
         DatabaseReference data = getMYREF("techProducts").push();
         uploadImage(product.getImage(),data.getKey());
@@ -135,7 +155,10 @@ public class FirebaseController {
         Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
     }
 
-    //הפעולה מעדכנת את מחירו של מוצר בפיירבייס
+    /**
+     * הפעולה מעדכנת את מחירו של מוצר בפיירבייס
+     */
+//הפעולה מעדכנת את מחירו של מוצר בפיירבייס
     public void updateProduct(String id, int price,String idBuy)
     {
         getMYREF("products").child(id).child("sellId").addValueEventListener(new ValueEventListener() {
@@ -183,7 +206,9 @@ public class FirebaseController {
 
     }
 
-    //הפעולה מעדכנת את מחירו של המוצר הטכנולוגי
+    /**
+     *הפעולה מעדכנת את מחירו של המוצר הטכנולוגי
+     */
     public void updateTechProduct(String id, int price,String idBuy)
     {
         getMYREF("techProducts").child(id).child("sellId").addValueEventListener(new ValueEventListener() {
@@ -229,6 +254,9 @@ public class FirebaseController {
         });
     }
 
+    /**
+     * הפעולה שבודקת אם מוצר נקנה לאחר שבוע ומוכרת אותו בהתאם
+     */
     public void removeProduct(String id)
     {
                 getMYREF("products").child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -297,6 +325,9 @@ public class FirebaseController {
     }
 
 
+    /**
+     * הפעולה שבודקת אם מוצר טכנולוגי נקנה לאחר שבוע ומוכרת אותו בהתאם
+     */
     public void removeTechProduct(String id)
     {
         getMYREF("techProducts").child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -365,7 +396,9 @@ public class FirebaseController {
     }
 
 
-
+    /**
+     * הפעולה מעדכנת את מספר המטבעות של המשתמשים לאחר קניית מוצר
+     */
     public void updateCoins (int price , String sellId , String buyId)
     {
         getMYREF("users").child(sellId).child("coin").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -395,7 +428,10 @@ public class FirebaseController {
     }
 
 
-    //הפעולה המציגה את רשימת המוצרים
+    /**
+     * הפעולה המציגה את רשימת המוצרים
+     */
+
     public void retrieveData( IFirebaseCallback firebaseCallback)
     {
         Query query = getMYREF("products").orderByChild("stratDate");
@@ -432,7 +468,9 @@ public class FirebaseController {
     }
 
 
-    //הפעולה המציגה את רשימת המוצרים הטכנולוגיים
+    /**
+     * הפעולה המציגה את רשימת המוצרים הטכנולוגיים
+     */
      public void readTechProducts( IFirebaseCallback firebaseCallback)
     {
         Query query = getMYREF("techProducts").orderByChild("stratDate");
@@ -468,7 +506,9 @@ public class FirebaseController {
     }
 
 
-    //הפעולה יוצרת משתמש חדש ושומרת אותו בפיירבייס
+    /**
+     * הפעולה יוצרת משתמש חדש ושומרת אותו בפיירבייס
+     */
     public void createUser(User user, String password) {
         getAuth().createUserWithEmailAndPassword(user.getEmail(), password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -488,7 +528,9 @@ public class FirebaseController {
     }
 
 
-    //פעולת התחברות של משתמש קיים לאפליקציה
+    /**
+     * פעולת התחברות של משתמש קיים לאפליקציה
+     */
     public void lonIn (String email , String password)
     {
         getAuth().signInWithEmailAndPassword(email, password)
@@ -505,21 +547,27 @@ public class FirebaseController {
                 });
     }
 
-    //הפעולה מנתקת את המשתמש המחובר
+    /**
+     * Log out.
+     */
     public void logOut()
     {
         getAuth().signOut();
         context.startActivity(new Intent(context, MainActivity.class));
     }
 
-    //פעולה המנתקת את המשתמש המחובר כדי לאפשר להחליף למשתמש אחר
+    /**
+     * פעולה המנתקת את המשתמש המחובר כדי לאפשר להחליף למשתמש אחר
+     */
     public void swich()
     {
         getAuth().signOut();
     }
 
 
-    //הפעולה לקריאת המשתמש המחובר כדי להציג את פרטיו
+    /**
+     * הפעולה לקריאת המשתמש המחובר כדי להציג את פרטיו
+     */
     public void read(IFirebaseCallback firebaseCallback)
     {
         FirebaseUser user = getAuth().getCurrentUser();
@@ -541,7 +589,9 @@ public class FirebaseController {
     }
 
 
-    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת FireBaseStorage נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+    /**
+     * פונקצייה זו מבטיחה שמופע יחיד של מחלקת FireBaseStorage נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+     */
     public static FirebaseStorage getSTORAGE()
     {
         if (STORAGE==null)
@@ -549,14 +599,18 @@ public class FirebaseController {
         return STORAGE;
     }
 
-    //פונקצייה זו מבטיחה שמופע יחיד של מחלקת StorageReference נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+    /**
+     * פונקצייה זו מבטיחה שמופע יחיד של מחלקת StorageReference נשמר, מאתחל אותו במידת הצורך ומחזיר את המופע.
+     */
     public static StorageReference getSTORAGEREFERENCE()
     {
         STORAGEREFERENCE = getSTORAGE().getReference();
         return STORAGEREFERENCE;
     }
 
-    //הפעולה שומרת תמונה שהתקבלה ב storage של הפיירבייס
+    /**
+     * הפעולה שומרת תמונה שהתקבלה ב storage של הפיירבייס
+     */
     public void uploadImage(Bitmap bitmap , String name)
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -577,6 +631,12 @@ public class FirebaseController {
     }
 
 
+    /**
+     * My products.
+     *
+     * @param firebaseCallback the firebase callback
+     * @param firebaseUser     the firebase user
+     */
     public void myProducts( IFirebaseCallback firebaseCallback , FirebaseUser firebaseUser)
     {
 

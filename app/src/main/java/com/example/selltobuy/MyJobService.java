@@ -4,6 +4,9 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.widget.Toast;
 
+/**
+ * The type My job service.
+ */
 public class MyJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {

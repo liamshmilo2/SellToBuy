@@ -14,6 +14,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.selltobuy.R;
 
+/**
+ * The type Notification receiver.
+ */
 public class NotificationReceiver extends BroadcastReceiver {
 
     @Override

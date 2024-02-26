@@ -16,9 +16,21 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.selltobuy.FirebaseController;
 import com.example.selltobuy.R;
 
+/**
+ * The type Sale receiver.
+ */
 public class SaleReceiver extends BroadcastReceiver {
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;
+    /**
+     * The Id.
+     */
     String id;
+    /**
+     * The Intent 2.
+     */
     Intent intent2;
     @Override
     public void onReceive(Context context, Intent intent) {
