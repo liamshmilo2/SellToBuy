@@ -161,11 +161,13 @@ public class FirebaseController {
 //הפעולה מעדכנת את מחירו של מוצר בפיירבייס
     public void updateProduct(String id, int price,String idBuy)
     {
-        getMYREF("products").child(id).child("sellId").addValueEventListener(new ValueEventListener() {
+        Log.d("idbuy",idBuy);
+        getMYREF("products").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String sellId = snapshot.getValue(String.class);
-                getMYREF("users").child(idBuy).child("coin").addValueEventListener(new ValueEventListener() {
+                Log.d("sellid",sellId);
+                getMYREF("users").child(idBuy).child("coin").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int coins = snapshot.getValue(Integer.class);

@@ -139,6 +139,11 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public void onCallbackUser(User user) {
+        buyId=user.getId();
+    }
+
+    @Override
     public void onClick(View view) {
         if(view==backBtn)
         {
@@ -166,8 +171,8 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         {
             if(product!=null)
             {
-                firebaseController.updateProduct(product.getPid(),editPrice,buyId);
-                Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
+                firebaseController.updateProduct(product.getPid(), editPrice, buyId);
+                Intent intent = new Intent(BuyOneProduct.this, Buyproduct.class);
                 startActivity(intent);
             }
             else
@@ -180,10 +185,7 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public void onCallbackUser(User user) {
-        buyId=user.getId();
-    }
+
 
     @Override
     public void onCallbackList(ArrayList<Product> products) {

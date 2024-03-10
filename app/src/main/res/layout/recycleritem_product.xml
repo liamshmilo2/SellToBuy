@@ -49,8 +49,8 @@
 
     <TextView
         android:id="@+id/textview_strat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="21dp"
         android:layout_marginTop="260dp"
         android:layout_marginEnd="260dp"
         android:text="@string/startdate"
@@ -60,8 +60,8 @@
 
     <TextView
         android:id="@+id/textview_final"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="21dp"
         android:layout_marginEnd="16dp"
         android:text="@string/finaldate"
         android:textColor="@color/black"
