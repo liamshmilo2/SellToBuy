@@ -114,6 +114,8 @@ public class FirebaseController {
      * הפעולה שומרת עצם מהמחלקה Product בפיירבייס
      */
     public void saveProduct(Product product , String idSell) {
+       // if (product instanceof TechProduct)
+
         DatabaseReference data = getMYREF("products").push();
         uploadImage(product.getImage(),data.getKey());
         Product product1 = new Product(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate());
@@ -137,6 +139,7 @@ public class FirebaseController {
      * הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
      */
     public void saveTechProduct(TechProduct product, String idSell) {
+
         DatabaseReference data = getMYREF("techProducts").push();
         uploadImage(product.getImage(),data.getKey());
         TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(),product.getSociety());
@@ -213,11 +216,11 @@ public class FirebaseController {
      */
     public void updateTechProduct(String id, int price,String idBuy)
     {
-        getMYREF("techProducts").child(id).child("sellId").addValueEventListener(new ValueEventListener() {
+        getMYREF("techProducts").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String sellId = snapshot.getValue(String.class);
-                getMYREF("users").child(idBuy).child("coin").addValueEventListener(new ValueEventListener() {
+                getMYREF("users").child(idBuy).child("coin").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int coins = snapshot.getValue(Integer.class);
@@ -430,6 +433,18 @@ public class FirebaseController {
     }
 
 
+    public void updateName(String name , String id)
+    {
+        getMYREF("users").child(id).child("name").setValue(name);
+    }
+
+    public void updateUserName(String username , String id)
+    {
+        getMYREF("users").child(id).child("userName").setValue(username);
+
+    }
+
+
     /**
      * הפעולה המציגה את רשימת המוצרים
      */
@@ -440,9 +455,10 @@ public class FirebaseController {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 ArrayList productList = new ArrayList<Product>();
                 for(DataSnapshot data : dataSnapshot.getChildren())
-                {  
+                {
                     final Product p = data.getValue(Product.class);
                     p.setPid(data.getKey());
                     final String key = p.getPid();

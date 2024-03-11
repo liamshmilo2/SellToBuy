@@ -13,11 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.selltobuy.FirebaseController;
 import com.example.selltobuy.IFirebaseCallback;
 import com.example.selltobuy.ProductAdapter;
+import com.example.selltobuy.classes.Check;
 import com.example.selltobuy.classes.Product;
 import com.example.selltobuy.R;
 import com.example.selltobuy.classes.TechProduct;
@@ -78,6 +81,8 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
      * The Update btn.
      */
     Button updateBtn;
+    Check check;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,8 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         recyclerviewProduct2 = findViewById(R.id.recyclerview_product2);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerviewProduct2.setLayoutManager(layoutManager);
+
+        check=new Check();
     }
 
     //הפולה יוצרת את ה menu
@@ -136,6 +143,7 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         usernameDetails.setText("User name: " + user.getUserName());
         emailDetails.setText("Email: " + user.getEmail());
         coinsDetails.setText("Coin number: " + user.getCoin());
+        id=user.getId();
     }
 
 
@@ -159,11 +167,20 @@ public class Userdetails extends AppCompatActivity implements IFirebaseCallback,
         if (view==updateBtn){
             Dialog dialog = new Dialog(Userdetails.this);
             dialog.setContentView(R.layout.updatedialog);
+            EditText name = dialog.findViewById(R.id.name);
+            EditText username = dialog.findViewById(R.id.usernamedetails);
             Button btnclose = dialog.findViewById(R.id.btnclose);
             btnclose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialog.dismiss();
+                    if(check.checkName(name.getText().toString())==true)
+                    {
+                        firebaseController.updateName(name.getText().toString(),id);
+                    }
+                    if(check.checkName(username.getText().toString())==true)
+                    {
+                        firebaseController.updateUserName(username.getText().toString(),id);
+                    }
                 }
             });
             dialog.show();
