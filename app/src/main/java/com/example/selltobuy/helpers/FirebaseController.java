@@ -153,37 +153,13 @@ public class FirebaseController {
         }
     }
 
-    /**
-     * הפעולה שומרת עצם מהמחלקה TechProduct בפיירבייס
-     */
-    public void saveTechProduct(TechProduct product, String idSell) {
-
-        DatabaseReference data = getMYREF("techProducts").push();
-        uploadImage(product.getImage(),data.getKey());
-        TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(),product.getSociety());
-        product1.setPid(data.getKey());
-        product1.setSellId(idSell);
-        product1.setBuyId("null");
-        data.setValue(product1);
-
-        Intent intent2 = new Intent(context,SaleReceiver.class);
-
-        intent2.putExtra("productId" ,"");
-        intent2.putExtra("techProductId" , product1.getPid());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
-        Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
-    }
 
     /**
      * הפעולה מעדכנת את מחירו של מוצר בפיירבייס
      */
-//הפעולה מעדכנת את מחירו של מוצר בפיירבייס
-    public void updateProduct(String id, int price,String idBuy)
+    public void updateProduct(String id, int price,String idBuy,String key)
     {
-        Log.d("idbuy",idBuy);
-        getMYREF("products").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
+        getMYREF(key).child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String sellId = snapshot.getValue(String.class);
@@ -194,10 +170,10 @@ public class FirebaseController {
                         int coins = snapshot.getValue(Integer.class);
                         if(!sellId.equals(idBuy) && coins>=price)
                         {
-                            getMYREF("products").child(id).child("price").setValue(price);
-                            getMYREF("products").child(id).child("buyId").setValue(idBuy);
+                            getMYREF(key).child(id).child("price").setValue(price);
+                            getMYREF(key).child(id).child("buyId").setValue(idBuy);
 
-                            getMYREF("products").child(id).child("sellId").removeEventListener(this);
+                            getMYREF(key).child(id).child("sellId").removeEventListener(this);
                             getMYREF("users").child(idBuy).child("coin").removeEventListener(this);
                         }
                         else
@@ -227,88 +203,40 @@ public class FirebaseController {
         });
 
 
-    }
-
-    /**
-     *הפעולה מעדכנת את מחירו של המוצר הטכנולוגי
-     */
-    public void updateTechProduct(String id, int price,String idBuy)
-    {
-        getMYREF("techProducts").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String sellId = snapshot.getValue(String.class);
-                getMYREF("users").child(idBuy).child("coin").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int coins = snapshot.getValue(Integer.class);
-                        if(!sellId.equals(idBuy) && coins>=price)
-                        {
-                            getMYREF("techProducts").child(id).child("price").setValue(price);
-                            getMYREF("techProducts").child(id).child("buyId").setValue(idBuy);
-
-                            getMYREF("techProducts").child(id).child("sellId").removeEventListener(this);
-                            getMYREF("users").child(idBuy).child("coin").removeEventListener(this);
-                        }
-                        else
-                        {
-                            if (sellId.equals(idBuy))
-                            {
-                                Toast.makeText(context, "this is your product", Toast.LENGTH_SHORT).show();
-                            }
-                            else if (coins<price) {
-                                Toast.makeText(context, "you don't have enough coins", Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     /**
      * הפעולה שבודקת אם מוצר נקנה לאחר שבוע ומוכרת אותו בהתאם
      */
-    public void removeProduct(String id)
+    public void removeProduct(String id, String key)
     {
-                getMYREF("products").child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
+                getMYREF(key).child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String buyId = snapshot.getValue(String.class);
 
-                        getMYREF("products").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                        getMYREF(key).child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Product product = snapshot.getValue(Product.class);
                                 if(buyId.equals("null"))
                                 {
-                                    getMYREF("products").child(id).removeValue();
+                                    getMYREF(key).child(id).removeValue();
                                 }
                                 else
                                 {
-                                    getMYREF("products").child(id).child("price").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    getMYREF(key).child(id).child("price").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             int price = snapshot.getValue(int.class);
-                                            getMYREF("products").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            getMYREF(key).child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     String sellId = snapshot.getValue(String.class);
                                                     DatabaseReference data = getMYREF("sold").child(id);
                                                     data.setValue(product);
                                                     updateCoins(price,sellId,buyId);
-                                                    getMYREF("products").child(id).removeValue();
+                                                    getMYREF(key).child(id).removeValue();
                                                 }
 
                                                 @Override
@@ -348,75 +276,6 @@ public class FirebaseController {
     }
 
 
-    /**
-     * הפעולה שבודקת אם מוצר טכנולוגי נקנה לאחר שבוע ומוכרת אותו בהתאם
-     */
-    public void removeTechProduct(String id)
-    {
-        getMYREF("techProducts").child(id).child("buyId").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String buyId = snapshot.getValue(String.class);
-
-                getMYREF("techProducts").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Product product = snapshot.getValue(Product.class);
-                        if(buyId.equals("null"))
-                        {
-                            getMYREF("techProducts").child(id).removeValue();
-                        }
-                        else
-                        {
-                            getMYREF("techProducts").child(id).child("price").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    int price = snapshot.getValue(int.class);
-                                    getMYREF("techProducts").child(id).child("sellId").addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            String sellId = snapshot.getValue(String.class);
-                                            DatabaseReference data = getMYREF("sold").child(id);
-                                            data.setValue(product);
-                                            updateCoins(price,sellId,buyId);
-                                            getMYREF("techProducts").child(id).removeValue();
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
 
 
     /**

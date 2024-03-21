@@ -43,14 +43,14 @@ public class SaleReceiver extends BroadcastReceiver {
              if(!intent.getExtras().getString("productId").equals(""))
              {
                  id = intent.getExtras().getString("productId");
-                 firebaseController.removeProduct(id);
+                 firebaseController.removeProduct(id,"products");
 
                  sendNotification(context);
              }
              if(!intent.getExtras().getString("techProductId").equals(""))
              {
                  id=intent.getExtras().getString("techProductId");
-                 firebaseController.removeTechProduct(id);
+                 firebaseController.removeProduct(id,"techProducts");
 
                  sendNotification(context);
              }

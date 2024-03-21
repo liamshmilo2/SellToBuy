@@ -171,13 +171,13 @@ public class BuyOneProduct extends AppCompatActivity implements View.OnClickList
         {
             if(product!=null)
             {
-                firebaseController.updateProduct(product.getPid(), editPrice, buyId);
+                firebaseController.updateProduct(product.getPid(), editPrice, buyId,"products");
                 Intent intent = new Intent(BuyOneProduct.this, Buyproduct.class);
                 startActivity(intent);
             }
             else
             {
-                firebaseController.updateTechProduct(techProduct.getPid(),editPrice,buyId);
+                firebaseController.updateProduct(techProduct.getPid(),editPrice,buyId,"techProducts");
                 Intent intent = new Intent(BuyOneProduct.this,Buyproduct.class);
                 startActivity(intent);
             }
