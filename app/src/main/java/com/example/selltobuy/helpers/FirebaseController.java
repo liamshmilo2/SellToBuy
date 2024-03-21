@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.helpers;
 
 
 
@@ -16,12 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.selltobuy.receiver.SaleReceiver;
-import com.example.selltobuy.activities.BuyOneProduct;
 import com.example.selltobuy.activities.Buyproduct;
 import com.example.selltobuy.activities.MainActivity;
-import com.example.selltobuy.classes.Product;
-import com.example.selltobuy.classes.TechProduct;
-import com.example.selltobuy.classes.User;
+import com.example.selltobuy.objects.Product;
+import com.example.selltobuy.objects.TechProduct;
+import com.example.selltobuy.objects.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -114,25 +113,44 @@ public class FirebaseController {
      * הפעולה שומרת עצם מהמחלקה Product בפיירבייס
      */
     public void saveProduct(Product product , String idSell) {
-       // if (product instanceof TechProduct)
+        if (product instanceof TechProduct)
+        {
+            DatabaseReference data = getMYREF("techProducts").push();
+            uploadImage(product.getImage(),data.getKey());
+            TechProduct product1 = new TechProduct(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate(), ((TechProduct) product).getSociety());
+            product1.setPid(data.getKey());
+            product1.setSellId(idSell);
+            product1.setBuyId("null");
+            data.setValue(product1);
 
-        DatabaseReference data = getMYREF("products").push();
-        uploadImage(product.getImage(),data.getKey());
-        Product product1 = new Product(product.getPrice(),product.getName(),product.getInfo(),product.getStratDate(),product.getFinalDate());
-        product1.setPid(data.getKey());
-        product1.setSellId(idSell);
-        product1.setBuyId("null");
-        data.setValue(product1);
+            Intent intent2 = new Intent(context,SaleReceiver.class);
+
+            intent2.putExtra("productId" ,"");
+            intent2.putExtra("techProductId" , product1.getPid());
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
+            Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            DatabaseReference data = getMYREF("products").push();
+            uploadImage(product.getImage(), data.getKey());
+            Product product1 = new Product(product.getPrice(), product.getName(), product.getInfo(), product.getStratDate(), product.getFinalDate());
+            product1.setPid(data.getKey());
+            product1.setSellId(idSell);
+            product1.setBuyId("null");
+            data.setValue(product1);
 
 
-        Intent intent2 = new Intent(context, SaleReceiver.class);
+            Intent intent2 = new Intent(context, SaleReceiver.class);
 
-        intent2.putExtra("productId" ,product1.getPid());
-        intent2.putExtra("techProductId" , "");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1,intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+(60000),pendingIntent);
-        Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
+            intent2.putExtra("productId", product1.getPid());
+            intent2.putExtra("techProductId", "");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent2, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (60000), pendingIntent);
+            Toast.makeText(context, "in alarm", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

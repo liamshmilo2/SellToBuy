@@ -1,7 +1,6 @@
-package com.example.selltobuy.classes;
+package com.example.selltobuy.objects;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * The type User.

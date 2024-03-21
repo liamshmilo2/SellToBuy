@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.helpers.FirebaseController;
 import com.example.selltobuy.R;
 
 /**

@@ -1,11 +1,11 @@
-package com.example.selltobuy;
+package com.example.selltobuy.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.selltobuy.activities.MainActivity;
+import com.example.selltobuy.R;
 
 /**
  * The type Opening activity.

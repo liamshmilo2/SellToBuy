@@ -27,14 +27,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.selltobuy.classes.Check;
-import com.example.selltobuy.FirebaseController;
-import com.example.selltobuy.IFirebaseCallback;
-import com.example.selltobuy.classes.MyDate;
-import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.helpers.Check;
+import com.example.selltobuy.helpers.FirebaseController;
+import com.example.selltobuy.helpers.IFirebaseCallback;
+import com.example.selltobuy.objects.MyDate;
+import com.example.selltobuy.objects.Product;
 import com.example.selltobuy.R;
-import com.example.selltobuy.classes.TechProduct;
-import com.example.selltobuy.classes.User;
+import com.example.selltobuy.objects.TechProduct;
+import com.example.selltobuy.objects.User;
 import com.example.selltobuy.receiver.SaleReceiver;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -314,7 +314,7 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
                 }
                 if (text.equals("Tech product")) {
                     techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, society);
-                    firebaseController.saveTechProduct(techProduct,sellId);
+                    firebaseController.saveProduct(techProduct,sellId);
                     Intent intent = new Intent(Sell.this, Buyproduct.class);
                     startActivity(intent);
                 }

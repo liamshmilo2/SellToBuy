@@ -15,16 +15,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.selltobuy.FirebaseController;
-import com.example.selltobuy.IFirebaseCallback;
-import com.example.selltobuy.ProductAdapter;
-import com.example.selltobuy.classes.Check;
-import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.helpers.FirebaseController;
+import com.example.selltobuy.helpers.IFirebaseCallback;
+import com.example.selltobuy.helpers.ProductAdapter;
+import com.example.selltobuy.helpers.Check;
+import com.example.selltobuy.objects.Product;
 import com.example.selltobuy.R;
-import com.example.selltobuy.classes.TechProduct;
-import com.example.selltobuy.classes.User;
+import com.example.selltobuy.objects.TechProduct;
+import com.example.selltobuy.objects.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

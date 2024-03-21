@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.selltobuy.classes.Check;
-import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.helpers.Check;
+import com.example.selltobuy.helpers.FirebaseController;
 import com.example.selltobuy.R;
 
 /**

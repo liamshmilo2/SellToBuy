@@ -1,4 +1,4 @@
-package com.example.selltobuy.classes;
+package com.example.selltobuy.helpers;
 
 import android.graphics.Bitmap;
 import android.util.Patterns;

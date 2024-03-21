@@ -1,8 +1,8 @@
-package com.example.selltobuy;
+package com.example.selltobuy.helpers;
 
-import com.example.selltobuy.classes.Product;
-import com.example.selltobuy.classes.TechProduct;
-import com.example.selltobuy.classes.User;
+import com.example.selltobuy.objects.Product;
+import com.example.selltobuy.objects.TechProduct;
+import com.example.selltobuy.objects.User;
 
 import java.util.ArrayList;
 

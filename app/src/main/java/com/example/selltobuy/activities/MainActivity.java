@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.selltobuy.classes.Check;
-import com.example.selltobuy.FirebaseController;
+import com.example.selltobuy.helpers.Check;
+import com.example.selltobuy.helpers.FirebaseController;
 import com.example.selltobuy.R;
-import com.example.selltobuy.classes.User;
+import com.example.selltobuy.objects.User;
 
 /**
  * The type Main activity.

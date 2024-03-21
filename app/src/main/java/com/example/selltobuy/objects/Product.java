@@ -1,4 +1,4 @@
-package com.example.selltobuy.classes;
+package com.example.selltobuy.objects;
 
 import android.graphics.Bitmap;
 

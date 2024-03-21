@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.helpers;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.selltobuy.classes.Product;
+import com.example.selltobuy.R;
+import com.example.selltobuy.objects.Product;
 
 import java.util.ArrayList;
 

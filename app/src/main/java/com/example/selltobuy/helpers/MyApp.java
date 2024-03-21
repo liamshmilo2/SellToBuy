@@ -1,4 +1,4 @@
-package com.example.selltobuy;
+package com.example.selltobuy.helpers;
 
 import android.app.Activity;
 import android.app.Application;

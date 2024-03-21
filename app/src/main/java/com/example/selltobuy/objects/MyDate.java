@@ -1,8 +1,6 @@
-package com.example.selltobuy.classes;
+package com.example.selltobuy.objects;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * The type My date.
