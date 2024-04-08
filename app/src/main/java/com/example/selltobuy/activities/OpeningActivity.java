@@ -17,7 +17,7 @@ public class OpeningActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening);
 
-        new Thread(new Runnable() {
+        new Thread(new Runnable() { 
             @Override
             public void run() {
                 try {

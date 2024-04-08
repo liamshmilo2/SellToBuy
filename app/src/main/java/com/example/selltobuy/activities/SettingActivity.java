@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.selltobuy.MyService;
 import com.example.selltobuy.helpers.Check;
 import com.example.selltobuy.helpers.FirebaseController;
 import com.example.selltobuy.R;
@@ -71,12 +72,20 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(intent2);
         }
         if (item.getItemId()==R.id.buy){
-            Intent intent3 = new Intent(SettingActivity.this , Buyproduct.class);
+            Intent intent3 = new Intent(SettingActivity.this , BuyProduct.class);
             startActivity(intent3);
         }
         if (item.getItemId()==R.id.sell){
             Intent intent4 = new Intent(SettingActivity.this , Sell.class);
             startActivity(intent4);
+        }
+        if(item.getItemId()==R.id.startmusic)
+        {
+            startService(new Intent(this, MyService.class));
+        }
+        if(item.getItemId()==R.id.stopmusic)
+        {
+            stopService(new Intent(this, MyService.class));
         }
         return true;
     }

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.selltobuy.receiver.SaleReceiver;
-import com.example.selltobuy.activities.Buyproduct;
+import com.example.selltobuy.activities.BuyProduct;
 import com.example.selltobuy.activities.MainActivity;
 import com.example.selltobuy.objects.Product;
 import com.example.selltobuy.objects.TechProduct;
@@ -412,7 +412,7 @@ public class FirebaseController {
                         if (task.isSuccessful()) {
                             user.setId(task.getResult().getUser().getUid());
                             getMYREF("users").child(task.getResult().getUser().getUid()).setValue(user);
-                            context.startActivity(new Intent(context, Buyproduct.class));
+                            context.startActivity(new Intent(context, BuyProduct.class));
                         } else {
 
                             Toast.makeText(context, "Authentication failed."+task.getException().getMessage(),
@@ -433,7 +433,7 @@ public class FirebaseController {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            context.startActivity(new Intent(context,Buyproduct.class));
+                            context.startActivity(new Intent(context, BuyProduct.class));
                         } else {
                             Toast.makeText(context, "Authentication failed."+task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();

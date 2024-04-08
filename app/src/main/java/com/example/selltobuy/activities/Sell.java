@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.selltobuy.MyService;
 import com.example.selltobuy.helpers.Check;
 import com.example.selltobuy.helpers.FirebaseController;
 import com.example.selltobuy.helpers.IFirebaseCallback;
@@ -234,8 +235,16 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
             startActivity(intent2);
         }
         if (item.getItemId()==R.id.buy){
-            Intent intent3 = new Intent(Sell.this , Buyproduct.class);
+            Intent intent3 = new Intent(Sell.this , BuyProduct.class);
             startActivity(intent3);
+        }
+        if(item.getItemId()==R.id.startmusic)
+        {
+            startService(new Intent(this, MyService.class));
+        }
+        if(item.getItemId()==R.id.stopmusic)
+        {
+            stopService(new Intent(this, MyService.class));
         }
         return true;
     }
@@ -308,14 +317,14 @@ public class Sell extends AppCompatActivity implements View.OnClickListener , Ad
 
                     product = new Product(price2, name, info, date1, date2,bitmap);
                     firebaseController.saveProduct(product,sellId);
-                    Intent intent = new Intent(Sell.this, Buyproduct.class);
+                    Intent intent = new Intent(Sell.this, BuyProduct.class);
                     startActivity(intent);
 
                 }
                 if (text.equals("Tech product")) {
                     techProduct = new TechProduct(price2, name, info, date1, date2,bitmap, society);
                     firebaseController.saveProduct(techProduct,sellId);
-                    Intent intent = new Intent(Sell.this, Buyproduct.class);
+                    Intent intent = new Intent(Sell.this, BuyProduct.class);
                     startActivity(intent);
                 }
 

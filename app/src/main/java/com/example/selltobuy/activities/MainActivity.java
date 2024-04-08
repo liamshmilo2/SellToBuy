@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(firebaseController.currentUser())
         {
-            Intent intent = new Intent(MainActivity.this, Buyproduct.class);
+            Intent intent = new Intent(MainActivity.this, BuyProduct.class);
             startActivity(intent);
         }
     }
